@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="Documentation" content="Documentation d'un code source" />
+    <title>Documentation</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Documentation</h1>
+      <p>Auteur</p>
+      <p>version</p>
+      <p>date</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>Index des fichiers</h2>
+        <h3>Liste des fichiers</h3>
+        <p>Liste de tous les fichiers avec une briève description :</p>
+        <ul>
+          <li>fichier1.c</li>
+          <li>fichier2.c</li>
+          <li>fichier3.c</li>
+        </ul>
+      </section>
+
+      <h2>Documentation des fichiers</h2>
+
+      <!-- ANTWANNE -->
+      <section>
+        <article>
+          <h3>Référence du fichier fichier1.c</h3>
+          <p>Les includes...</p>
+          <p>...</p>
+          <p>etc...</p>
+        </article>
+
+        <article>
+          <h4>Macros</h4>
+          <p>#define... etc</p>
+          <p>...</p>
+          <p>...</p>
+        </article>
+
+        <article>
+          <h4>Définition de type</h4>
+          <p>typedef...etc</p>
+          <p>...</p>
+          <p>...</p>
+        </article>
+
+        <article>
+          <h4>Fonctions</h4>
+          <p>void <strong>NOMFONCTION</strong>...etc</p>
+          <p>...</p>
+          <p>...</p>
+        </article>
+
+        <hr />
+
+        <article>
+          <h4>Documentation des macros</h4>
+          <p>...</p>
+          <p>...</p>
+          <p>...</p>
+        </article>
+
+        <hr />
+
+        <article>
+          <h4>Documentation des définitions de type</h4>
+          <p>...</p>
+          <p>...</p>
+          <p>...</p>
+        </article>
+
+        <hr />
+
+        <article>
+          <h4>Documentation des fonctions</h4>
+          <p>...</p>
+          <table>
+            <caption>
+              Paramètre(s)
+            </caption>
+            <tr>
+              <td>typeParametre</td>
+              <td>nomParametre</td>
+            </tr>
+            <tr>
+              <td>typeParametre...</td>
+              <td>nomParametre...etc</td>
+            </tr>
+          </table>
+          <p>...</p>
+          <p>...</p>
+        </article>
+      </section>
+      <!-- Gabriel -->
+      <section>
+        <article>
+          <h3>Référence du fichier fichier2.c</h3>
+          <p>#include < stdio.h></p>
+          <p>#include < stdlib.h></p>
+        </article>
+        
+        <article>
+            <h4>Structures de données</h4>
+            <p>struct <strong>Facture</strong></p>
+            <p>struct <strong>Produit</strong></p>
+        </article>
+
+        <article>
+            <h4>Macros</h4>
+            <p>#define <strong></strong>MAX_LONGUEUR</strong>  50</p>
+            <p class="tabulation">programme de facture </p>
+            <p>#define <strong>TAILLE_TABLEAU</strong>  5</p>
+            <p class="tabulation">constante pour la Taille. </p>
+            <p>#define <strong>VALEUR_MAX</strong>  1000</p>
+            <p>   constante pour la valeur max. </p>
+          </article>
+
+        <article>
+          <h4>Définition de type</h4>
+          <p>typedef <strong>Facture TableauFactures[TAILLE_TABLEAU]</strong></p>
+          <p class="tabulation">type tableau de TAILLE_TABLEAU de <strong>Facture</strong></p>
+          <p>typedef <strong>Produit TableauProduits[TAILLE_TABLEAU]</strong></p>
+          <p class="tabulation">type tableau de TAILLE_TABLEAU de <strong>Produit</strong></p>
+        </article>
+
+        <article>
+          <h4>Fonctions</h4>
+          <p>void <strong>afficherFacture</strong> (<strong>Facture </strong>f)</p>
+          <p class="tabulation">Affiche les détails d'une facture. </p>
+          <p>void <strong>afficherProduit</strong> (<strong>Produit </strong>p)</p>
+          <p class="tabulation">Affiche les détails d'un produit.</p>
+          <p>int <strong>main</strong> ()</p>
+          <p class="tabulation">Fonction principale. </p>
+        </article>
+
+        <hr />
+
+        <article>
+          <h4>Documentation des macros</h4>
+          <p><strong>#define MAX_LONGUEUR  50</strong></p>
+          <p class="tabulation">programme de facture </p>
+          <p><strong>#define TAILLE_TABLEAU  5</strong></p>
+          <p class="tabulation">constante pour la Taille. </p>
+          <p><strong>#define VALEUR_MAX  1000</strong></p>
+          <p class="tabulation">constante pour la valeur max. </p>
+        </article>
+
+        <hr />
+
+        <article>
+          <h4>Documentation des définitions de type</h4>
+          <p><strong>TableauFactures</strong></p>
+          <p class="tabulation">type tableau de TAILLE_TABLEAU de <strong>Facture</strong></p>
+          <p class="tabulation">Le type TableauFactures sert de stockage pour les Factures </p>
+          <p><strong>TableauProduits</strong></p>
+          <p class="tabulation">type tableau de TAILLE_TABLEAU de <strong>Produit</strong></p>
+          <p class="tabulation">Le type TableauProduits sert de stockage pour les Produits  </p>
+        </article>
+
+        <hr />
+
+        <article>
+          <h4>Documentation des fonctions</h4>
+          <p><strong>void afficherFacture (Facture    f)</strong></p>
+          <p class="tabulation">Affiche les détails d'une facture. </p>
+          <table>
+            <caption>
+              Paramètre(s)
+            </caption>
+            <tr>
+              <td>f</td>
+              <td>La facture à afficher </td>
+            </tr>
+          </table>
+          <p><strong>void afficherProduit (Produit    p)</strong></p>
+          <p class="tabulation">Affiche les détails d'un produit.</p>
+          <table>
+            <caption>
+              Paramètre(s)
+            </caption>
+            <tr>
+              <td>p</td>
+              <td>Le produit à afficher</td>
+            </tr>
+          </table>
+          <p><strong>int main ()</strong></p>
+          <p class="tabulation">Fonction principale. </p>
+          <p class="tabulation"><strong>Renvoie</strong></p>
+          <p class="tabulationplus">EXIT_SUCCESS en cas de succès </p>
+        </article>
+      </section>
+
+      <!-- Morgannne -->
+      <section>
+        <article>
+          <h3>Référence du fichier fichier1.c</h3>
+          <p>Les includes...</p>
+          <p>...</p>
+          <p>etc...</p>
+        </article>
+
+        <article>
+          <h4>Macros</h4>
+          <p>#define... etc</p>
+          <p>...</p>
+          <p>...</p>
+        </article>
+
+        <article>
+          <h4>Définition de type</h4>
+          <p>typedef...etc</p>
+          <p>...</p>
+          <p>...</p>
+        </article>
+
+        <article>
+          <h4>Fonctions</h4>
+          <p>void <strong>NOMFONCTION</strong>...etc</p>
+          <p>...</p>
+          <p>...</p>
+        </article>
+
+        <hr />
+
+        <article>
+          <h4>Documentation des macros</h4>
+          <p>...</p>
+          <p>...</p>
+          <p>...</p>
+        </article>
+
+        <hr />
+
+        <article>
+          <h4>Documentation des définitions de type</h4>
+          <p>...</p>
+          <p>...</p>
+          <p>...</p>
+        </article>
+
+        <hr />
+
+        <article>
+          <h4>Documentation des fonctions</h4>
+          <p>...</p>
+          <table>
+            <caption>
+              Paramètre(s)
+            </caption>
+            <tr>
+              <td>typeParametre</td>
+              <td>nomParametre</td>
+            </tr>
+            <tr>
+              <td>typeParametre...</td>
+              <td>nomParametre...etc</td>
+            </tr>
+          </table>
+          <p>...</p>
+          <p>...</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

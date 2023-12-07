@@ -1,0 +1,12 @@
+		T1	T2	T3	T4	T5
+
+Morgan L.  : 	33.3%	40%	0%	0%	50%
+Antoine G. : 	33.3%	30%	0%	0%	0%
+Gabriel F. : 	33.3%	30%	0%	0%	0%
+Iwan C.    : 	0%	0%	100%	100%	50%
+
+T1 : 3 fichiers C commentés
+T2 : Modèle de documentation technique au format HTML
+T3 : Documentation utilisateur au format Markdown
+T4 : Documentation utilisateur en html
+T5 : Tableau de répartition des tâches
