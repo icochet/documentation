@@ -20,88 +20,175 @@
         <h3>Liste des fichiers</h3>
         <p>Liste de tous les fichiers avec une briève description :</p>
         <ul>
-          <li>fichier1.c</li>
-          <li>fichier2.c</li>
-          <li>fichier3.c</li>
+          <li>src1.c</li>
+          <li>src2.c</li>
+          <li>src3.c</li>
         </ul>
       </section>
 
       <h2>Documentation des fichiers</h2>
 
-      <!-- ANTWANNE -->
+      <!-- Antoine -->
       <section>
         <article>
-          <h3>Référence du fichier fichier1.c</h3>
-          <p>Les includes...</p>
-          <p>...</p>
-          <p>etc...</p>
+          <h3>Référence du fichier src1.c</h3>
+          <p>#include < stdio.h> </p>
+          <p>#include < stdlib.h> </p>
+          <p>#include < stdbool.h> </p>
         </article>
 
         <article>
           <h4>Macros</h4>
-          <p>#define... etc</p>
-          <p>...</p>
-          <p>...</p>
+
+          <p>#define <strong>TAILLE_MAX</strong></strong> 5</p>
+          <p class="tabulation">constante pour la taille maximum des tableaux</p>
+
+          <p>#define <strong>MAX_ETUDIANTS</strong>  3</p>
+          <p class="tabulation">constante pour le maximum d'étudiants </p>
         </article>
 
         <article>
           <h4>Définition de type</h4>
-          <p>typedef...etc</p>
-          <p>...</p>
-          <p>...</p>
+          <p>typedef int <strong>TableauPreference[TAILLE_MAX]</strong></p>
+          <p class="tabulation">type tableau de taille TAILLE_MAX</p>
+
+          <p>typedef float <strong>TableauNotes[TAILLE_MAX]</strong></p>
+          <p class="tabulation">type tableau de taille TAILLE_MAX</p>
+        </article>
+
+        <article>
+          <h4>Structures</h4>
+          <p>struct <strong>Etudiant</strong></p>
+          <p>structure des informations sur un étudiant</p>
+          <p class="tabulation">Nom de l'étudiant</p>
+          <p class="tabulation">L'âge de l'étudiant</p>
+
+          <p>struct <strong>Cours</strong></p>
+          <p>structure des informations sur un cours</p>
+          <p class="tabulation">Nom du cours</p>
         </article>
 
         <article>
           <h4>Fonctions</h4>
-          <p>void <strong>NOMFONCTION</strong>...etc</p>
-          <p>...</p>
-          <p>...</p>
+          <p>int <strong>main</strong>()</p>
+          <p class="tabulation">Le programme principal</p>
+
+          <p>float <strong>calculerMoyenne</strong>(struct Cours cours)</p>
+          <p class="tabulation">Fonction pour calculer la moyenne des notes d'un cours</p>
+
+          <p>void <strong>afficherDetailsEtudiant</strong>(struct Etudiant etudiant)</p>
+          <p class="tabulation">Procédure pour afficher les détails d'un étudiant</p>
+
+          <p>void <strong>afficherDetailsCours</strong>(struct Cours cours)</p>
+          <p class="tabulation">Procédure pour afficher les détails d'un cours</p>
+
+          <p>bool <strong>afficherMessageFelicitation</strong>(float moyenne, float seuil)</p>
+          <p class="tabulation">Fonction pour afficher un message de félicitations et retourner un indicateur</p>
+
         </article>
 
         <hr />
 
         <article>
           <h4>Documentation des macros</h4>
-          <p>...</p>
-          <p>...</p>
-          <p>...</p>
+          <p><strong>#define TAILLE_MAX 5</strong></p>
+          <p class="tabulation">constante pour la taille maximum des tableaux</p>
+
+          <p><strong>#define MAX_ETUDIANTS 3</strong></p>
+          <p class="tabulation">constante pour le maximum d'étudiants </p>
         </article>
 
         <hr />
 
         <article>
           <h4>Documentation des définitions de type</h4>
-          <p>...</p>
-          <p>...</p>
-          <p>...</p>
+          <p><strong>TableauPreference</strong></p>
+          <p class="tabulation">type tableau de taille TAILLE_MAX</p>
+          <p class="tabulation">Le type TableauPreference sert de tableau pour stocker les préférences</p>
+
+          <p><strong>TableauNotes</strong></p>
+          <p class="tabulation">type tableau de taille TAILLE_MAX</p>
+          <p class="tabulation">Le type TableauNotes sert de tableau pour stocker les notes</p>
         </article>
 
         <hr />
 
         <article>
           <h4>Documentation des fonctions</h4>
-          <p>...</p>
+          <p><strong>int main()</strong></p>
+          <p class="tabulation">Le programme principal</p>
+          <p><strong>Renvoie</strong></p>
+          <p class="tabulation">EXIT_SUCCESS si le programme se termine correctement</p> 
+          <p>Ce programme permet d'appeler les différentes fonctions et procédure 
+             pour afficher les détails d'un étudiant et d'un cours, calculer 
+             la moyenne et afficher un message de félicitation</p> 
+
+          <p><strong>float calculerMoyenne(struct Cours cours)</strong></p>
+          <p class="tabulation">Fonction pour calculer la moyenne des notes d'un cours</p>
           <table>
             <caption>
               Paramètre(s)
             </caption>
             <tr>
-              <td>typeParametre</td>
-              <td>nomParametre</td>
-            </tr>
-            <tr>
-              <td>typeParametre...</td>
-              <td>nomParametre...etc</td>
+              <td>cours</td>
+              <td>Le cours</td>
             </tr>
           </table>
-          <p>...</p>
-          <p>...</p>
+          <p><strong>Renvoie</strong></p>
+            <p class="tabulation">la moyenne</p> 
+            <p>Cette fonction calcul la moyenne en parcourant chaque note</p>
+
+          <p><strong>void afficherDetailsEtudiant(struct Etudiant etudiant)</strong></p>
+          <p class="tabulation">Procédure pour afficher les détails d'un étudiant</p>
+          <table>
+            <caption>
+              Paramètre(s)
+            </caption>
+            <tr>
+              <td>etudiant</td>
+              <td>L'étudiant à afficher</td>
+            </tr>
+          </table>
+          <p>Cette procédure permet d'afficher le nom, l'âge et les préférences d'un étudiant</p>
+
+          <p><strong>afficherDetailsCours(struct Cours cours)</strong></p>
+          <p class="tabulation">Procédure pour afficher les détails d'un cours</p>
+          <table>
+            <caption>
+              Paramètre(s)
+            </caption>
+            <tr>
+              <td>cours</td>
+              <td>Le cours</td>
+            </tr>
+          </table>
+          <p>Cette procédure permet d'afficher le nom du cours et les notes</p>
+
+          <p><strong>bool afficherMessageFelicitation(float moyenne, float seuil)</strong></p>
+          <p class="tabulation">Fonction pour afficher un message de félicitations et retourner un indicateur</p>
+          <table>
+            <caption>
+              Paramètre(s)
+            </caption>
+            <tr>
+              <td>moyenne</td>
+              <td>La moyenne de l'étudiant</td>
+            </tr>
+            <tr>
+              <td>seuil</td>
+              <td>Le seuil</td>
+            </tr>
+          </table>
+          <p><strong>Renvoie</strong></p>
+            <p class="tabulation">true si la moyenne est supérieur au seuil, false sinon</p> 
+            <p>Cette fonction affiche un message de félicitation</p>
+
         </article>
       </section>
       <!-- Gabriel -->
       <section>
         <article>
-          <h3>Référence du fichier fichier2.c</h3>
+          <h3>Référence du fichier src2.c</h3>
           <p>#include < stdio.h></p>
           <p>#include < stdlib.h></p>
         </article>
@@ -200,7 +287,7 @@
       <!-- Morgannne -->
       <section>
         <article>
-          <h3>Référence du fichier fichier1.c</h3>
+          <h3>Référence du fichier src3.c</h3>
           <p>Les includes...</p>
           <p>...</p>
           <p>etc...</p>
