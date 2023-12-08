@@ -20,9 +20,12 @@
         <h3>Liste des fichiers</h3>
         <p>Liste de tous les fichiers avec une briève description :</p>
         <ul>
-          <li>src1.c</li>
-          <li>src2.c</li>
-          <li>src3.c</li>
+          <li><strong>src1.c</strong></li>
+          <p class="tabulation">Programme pour afficher les détails d'un élève et d'un cours, calculer une moyenne et afficher un message de félicitation</p>
+          <li><strong>src2.c</strong></li>
+          <p class="tabulation">programme de facture</p>
+          <li><strong>src3.c</strong></li>
+          <p class="tabulation">Programme affichant l'identité d'une personne et sa voiture</p>
         </ul>
       </section>
 
@@ -59,13 +62,15 @@
         <article>
           <h4>Structures</h4>
           <p>struct <strong>Etudiant</strong></p>
-          <p>structure des informations sur un étudiant</p>
-          <p class="tabulation">Nom de l'étudiant</p>
-          <p class="tabulation">L'âge de l'étudiant</p>
+          <p></p>
+          <p class="tabulation">structure des informations sur un étudiant</p>
+          <p class="tabulationplus"> Nom de l'étudiant</p>
+          <p class="tabulationplus"> L'âge de l'étudiant</p>
 
           <p>struct <strong>Cours</strong></p>
-          <p>structure des informations sur un cours</p>
-          <p class="tabulation">Nom du cours</p>
+          <p class="tabulation">structure des informations sur un cours</p>
+          <p class="tabulationplus">Nom du cours</p>
+          <p class="tabulationplus">Tableau des notes</p>
         </article>
 
         <article>
@@ -117,9 +122,9 @@
           <h4>Documentation des fonctions</h4>
           <p><strong>int main()</strong></p>
           <p class="tabulation">Le programme principal</p>
-          <p><strong>Renvoie</strong></p>
-          <p class="tabulation">EXIT_SUCCESS si le programme se termine correctement</p> 
-          <p>Ce programme permet d'appeler les différentes fonctions et procédure 
+          <p class="tabulation"><strong>Renvoie</strong></p>
+          <p class="tabulationplus">EXIT_SUCCESS si le programme se termine correctement</p> 
+          <p class="tabulation">Ce programme permet d'appeler les différentes fonctions et procédure 
              pour afficher les détails d'un étudiant et d'un cours, calculer 
              la moyenne et afficher un message de félicitation</p> 
 
@@ -134,9 +139,9 @@
               <td>Le cours</td>
             </tr>
           </table>
-          <p><strong>Renvoie</strong></p>
-            <p class="tabulation">la moyenne</p> 
-            <p>Cette fonction calcul la moyenne en parcourant chaque note</p>
+          <p class="tabulation"><strong>Renvoie</strong></p>
+          <p class="tabulationplus">la moyenne</p> 
+          <p class="tabulation">Cette fonction calcul la moyenne en parcourant chaque note</p>
 
           <p><strong>void afficherDetailsEtudiant(struct Etudiant etudiant)</strong></p>
           <p class="tabulation">Procédure pour afficher les détails d'un étudiant</p>
@@ -149,7 +154,7 @@
               <td>L'étudiant à afficher</td>
             </tr>
           </table>
-          <p>Cette procédure permet d'afficher le nom, l'âge et les préférences d'un étudiant</p>
+          <p class="tabulation">Cette procédure permet d'afficher le nom, l'âge et les préférences d'un étudiant</p>
 
           <p><strong>afficherDetailsCours(struct Cours cours)</strong></p>
           <p class="tabulation">Procédure pour afficher les détails d'un cours</p>
@@ -162,7 +167,7 @@
               <td>Le cours</td>
             </tr>
           </table>
-          <p>Cette procédure permet d'afficher le nom du cours et les notes</p>
+          <p class="tabulation">Cette procédure permet d'afficher le nom du cours et les notes</p>
 
           <p><strong>bool afficherMessageFelicitation(float moyenne, float seuil)</strong></p>
           <p class="tabulation">Fonction pour afficher un message de félicitations et retourner un indicateur</p>
@@ -179,9 +184,9 @@
               <td>Le seuil</td>
             </tr>
           </table>
-          <p><strong>Renvoie</strong></p>
-            <p class="tabulation">true si la moyenne est supérieur au seuil, false sinon</p> 
-            <p>Cette fonction affiche un message de félicitation</p>
+          <p class="tabulation"><strong>Renvoie</strong></p>
+            <p class="tabulationplus">true si la moyenne est supérieur au seuil, false sinon</p> 
+            <p class="tabulation">Cette fonction affiche un message de félicitation</p>
 
         </article>
       </section>
@@ -192,16 +197,10 @@
           <p>#include < stdio.h></p>
           <p>#include < stdlib.h></p>
         </article>
-        
-        <article>
-            <h4>Structures de données</h4>
-            <p>struct <strong>Facture</strong></p>
-            <p>struct <strong>Produit</strong></p>
-        </article>
 
         <article>
             <h4>Macros</h4>
-            <p>#define <strong></strong>MAX_LONGUEUR</strong>  50</p>
+            <p>#define <strong>MAX_LONGUEUR</strong>  50</p>
             <p class="tabulation">programme de facture </p>
             <p>#define <strong>TAILLE_TABLEAU</strong>  5</p>
             <p class="tabulation">constante pour la Taille. </p>
@@ -212,23 +211,37 @@
         <article>
           <h4>Définition de type</h4>
           <p>typedef <strong>Facture TableauFactures[TAILLE_TABLEAU]</strong></p>
-          <p class="tabulation">type tableau de TAILLE_TABLEAU de <strong>Facture</strong></p>
+          <p class="tabulation">type tableau de TAILLE_TABLEAU de Facture</p>
           <p>typedef <strong>Produit TableauProduits[TAILLE_TABLEAU]</strong></p>
-          <p class="tabulation">type tableau de TAILLE_TABLEAU de <strong>Produit</strong></p>
+          <p class="tabulation">type tableau de TAILLE_TABLEAU de Produit</p>
+        </article>
+
+        <article>
+          <h4>Structures</h4>
+          <p>struct <strong>Facture</strong></p>
+          <p class="tabulation">Type de structure pour les informations de facturation</p>
+          <p class="tabulationplus ">Identifiant du produit</p>
+          <p class="tabulationplus ">Nom du produit</p>
+          <p class="tabulationplus ">Prix du produit</p>
+          <p>struct <strong>Produit</strong></p>
+          <p class="tabulation">Type de structure pour les informations sur un produit</p>
+          <p class="tabulationplus ">Code de la facture</p>
+          <p class="tabulationplus ">Description de la facture</p>
+          <p class="tabulationplus ">Montant de la facture</p>
         </article>
 
         <article>
           <h4>Fonctions</h4>
-          <p>void <strong>afficherFacture</strong> (<strong>Facture </strong>f)</p>
+          <p>void <strong>afficherFacture</strong> (Facture f)</p>
           <p class="tabulation">Affiche les détails d'une facture. </p>
-          <p>void <strong>afficherProduit</strong> (<strong>Produit </strong>p)</p>
+          <p>void <strong>afficherProduit</strong> (Produit p)</p>
           <p class="tabulation">Affiche les détails d'un produit.</p>
           <p>int <strong>main</strong> ()</p>
           <p class="tabulation">Fonction principale. </p>
         </article>
 
         <hr />
-
+        constante pour la longueur max du nom du modèle.
         <article>
           <h4>Documentation des macros</h4>
           <p><strong>#define MAX_LONGUEUR  50</strong></p>
@@ -244,10 +257,10 @@
         <article>
           <h4>Documentation des définitions de type</h4>
           <p><strong>TableauFactures</strong></p>
-          <p class="tabulation">type tableau de TAILLE_TABLEAU de <strong>Facture</strong></p>
+          <p class="tabulation">type tableau de TAILLE_TABLEAU de Facture</p>
           <p class="tabulation">Le type TableauFactures sert de stockage pour les Factures </p>
           <p><strong>TableauProduits</strong></p>
-          <p class="tabulation">type tableau de TAILLE_TABLEAU de <strong>Produit</strong></p>
+          <p class="tabulation">type tableau de TAILLE_TABLEAU de Produit</p>
           <p class="tabulation">Le type TableauProduits sert de stockage pour les Produits  </p>
         </article>
 
@@ -255,7 +268,7 @@
 
         <article>
           <h4>Documentation des fonctions</h4>
-          <p><strong>void afficherFacture (Facture    f)</strong></p>
+          <p><strong>void afficherFacture (Facture f)</strong></p>
           <p class="tabulation">Affiche les détails d'une facture. </p>
           <table>
             <caption>
@@ -266,7 +279,7 @@
               <td>La facture à afficher </td>
             </tr>
           </table>
-          <p><strong>void afficherProduit (Produit    p)</strong></p>
+          <p><strong>void afficherProduit (Produit p)</strong></p>
           <p class="tabulation">Affiche les détails d'un produit.</p>
           <table>
             <caption>
@@ -288,70 +301,116 @@
       <section>
         <article>
           <h3>Référence du fichier src3.c</h3>
-          <p>Les includes...</p>
-          <p>...</p>
-          <p>etc...</p>
+          <p>#include < stdio.h> </p>
+          <p>#include < stdlib.h> </p>
         </article>
 
         <article>
           <h4>Macros</h4>
-          <p>#define... etc</p>
-          <p>...</p>
-          <p>...</p>
+          <p>#define <strong>T_NOM</strong> 50</p>
+          <p class="tabulation">constante pour la longueur max du nom de la personne.</p>
+          <p>#define <strong>T_MARQUE</strong> 30</p>
+          <p class="tabulation">constante pour la longueur max du nom de la marque.</p>
+          <p>#define <strong>T_MODELE</strong> 20</p>
+          <p class="tabulation">constante pour la longueur max du nom du modèle.</p>
+
         </article>
 
         <article>
           <h4>Définition de type</h4>
-          <p>typedef...etc</p>
-          <p>...</p>
-          <p>...</p>
+          <p>typedef <strong>int Age</strong></p>
+          <p class="tabulation">Type de l'age de la personne</p>
+          <p>typedef <strong>char Modele[T_MODELE]</strong></p>
+          <p class="tabulation">Type du modèle du véhicule</p>
+        </article>
+
+        <article>
+          <h4>Structures</h4>
+          <p>struct <strong>Personne</strong></p>
+          <p class="tabulation">structure des informations sur une personne</p>
+          <p class="tabulationplus">Nom de la personne</p>
+          <p class="tabulationplus">Age de la personne</p>
+          <p>struct <strong>Voiture</strong></p>
+          <p class="tabulation">structure des informations sur une voiture</p>
+          <p class="tabulationplus">Marque de la voiture</p>
+          <p class="tabulationplus">Modele de la voiture</p>
         </article>
 
         <article>
           <h4>Fonctions</h4>
-          <p>void <strong>NOMFONCTION</strong>...etc</p>
-          <p>...</p>
-          <p>...</p>
+          <p>void <strong>afficherNomAge</strong> (char* nom, Age age)</p>
+          <p class="tabulation">Affichage du nom et de l'âge d'une personne</p>
+          <p>void <strong>afficherVoiture</strong> (char* marque, Modele modele)</p>
+          <p class="tabulation">Affichage de la marque de la voiture et du modèle de la voiture</p>
+          <p>int <strong>main</strong> ()</p>
+          <p class="tabulation">Fonction principale. </p>
         </article>
 
         <hr />
 
         <article>
           <h4>Documentation des macros</h4>
-          <p>...</p>
-          <p>...</p>
-          <p>...</p>
+          <p>#define <strong>T_NOM 50</strong> </p>
+          <p class="tabulation">constante pour la longueur max du nom de la personne.</p>
+          <p>#define <strong>T_MARQUE 30</strong></p>
+          <p class="tabulation">constante pour la longueur max du nom de la marque.</p>
+          <p>#define <strong>T_MODELE 20</strong></p>
+          <p class="tabulation">constante pour la longueur max du nom du modèle.</p>
         </article>
 
         <hr />
 
         <article>
           <h4>Documentation des définitions de type</h4>
-          <p>...</p>
-          <p>...</p>
-          <p>...</p>
+          <p>typedef <strong>int Age</strong></p>
+          <p class="tabulation">Type de l'age de la personne</p>
+          <p>typedef <strong>char Modele[T_MODELE]</strong></p>
+          <p class="tabulation">Type du modèle du véhicule</p>
+          <p class="tabulation">Le modèle doit être une chaine de caractère de T_MODELE max caractère</p>
         </article>
 
         <hr />
 
         <article>
           <h4>Documentation des fonctions</h4>
-          <p>...</p>
+        
+          <p><strong>void afficherNomAge(char* nom, Age age)</strong></p>
+          <p class="tabulation">Affichage du nom et de l'âge d'une personne</p>
           <table>
             <caption>
               Paramètre(s)
             </caption>
             <tr>
-              <td>typeParametre</td>
-              <td>nomParametre</td>
+              <td>nom</td>
+              <td>Nom de la personne</td>
             </tr>
             <tr>
-              <td>typeParametre...</td>
-              <td>nomParametre...etc</td>
+              <td>age</td>
+              <td>Age de la personne</td>
             </tr>
           </table>
-          <p>...</p>
-          <p>...</p>
+          <p><strong>void afficherNomAge(char* nom, Age age)</strong></p>
+          <p class="tabulation">Affichage de la marque de la voiture et du modèle de la voiture</p>
+          <table>
+            <caption>
+              Paramètre(s)
+            </caption>
+            <tr>
+              <td>marque</td>
+              <td>La marque du véhicule</td>
+            </tr>
+            <tr>
+              <td>modele</td>
+              <td>Le modèle du véhicule</td>
+            </tr>
+          </table>
+
+          <p><strong>int main ()</strong></p>
+          <p class="tabulation">Fonction principale. </p>
+          <p class="tabulation"><strong>Renvoie</strong></p>
+          <p class="tabulationplus">EXIT_SUCCESS en cas de succès </p>
+          <p class="tabulation">Ce programme permet d'appeler les différentes procédure</p>
+
         </article>
       </section>
     </main>

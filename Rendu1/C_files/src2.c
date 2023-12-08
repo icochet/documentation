@@ -1,4 +1,5 @@
 /**
+ * \file src2.c
  * \brief programme de facture
  * \author Froc Gabriel
  * \version 1.0
@@ -24,32 +25,32 @@
 #define TAILLE_TABLEAU 5
 
 /**
- * \typedef Produit
+ * \struct Produit
  *
  * \brief Type de structure pour les informations sur un produit
  *
  * Le type Produit est utilisé pour stocker les détails spécifiques à un produit, 
  * tels que l'identifiant, le nom et le prix.
  */
-typedef struct {
+struct Produit{
     int id; /** Identifiant du produit */
     char nom[MAX_LONGUEUR]; /** Nom du produit */
     float prix; /** Prix du produit */
-} Produit;
+};
 
 /**
- * \typedef Facture
+ * \struct Facture
  *
  * \brief Type de structure pour les informations de facturation
  *
  * Le type Facture est utilisé pour stocker les détails relatifs à une facture, 
  * tels que le code de la facture, sa description et son montant.
  */
-typedef struct {
+struct Facture{
     int code; /** Code de la facture */
     char description[MAX_LONGUEUR]; /** Description de la facture */
     double montant; /** Montant de la facture */
-} Facture;
+};
 
 /**
  * 
@@ -74,9 +75,11 @@ typedef Produit TableauProduits[TAILLE_TABLEAU];
 typedef Facture TableauFactures[TAILLE_TABLEAU];
 
 /**
- * @brief Affiche les détails d'un produit
+ * \fn afficherProduit(Produit p)
  * 
- * @param p Le produit à afficher
+ * \brief Affiche les détails d'un produit
+ * 
+ * \param p Le produit à afficher
  */
 void afficherProduit(Produit p) {
     printf("ID du produit : %d\n", p.id);
@@ -85,9 +88,12 @@ void afficherProduit(Produit p) {
 }
 
 /**
- * @brief Affiche les détails d'une facture
  * 
- * @param f La facture à afficher
+ * \fn afficherFacture(Facture f)
+ * 
+ * \brief Affiche les détails d'une facture
+ * 
+ * \param f La facture à afficher
  */
 void afficherFacture(Facture f) {
     printf("Code de la facture : %d\n", f.code);
@@ -96,9 +102,11 @@ void afficherFacture(Facture f) {
 }
 
 /**
- * @brief Fonction principale
+ * \fn int main()
  * 
- * @return EXIT_SUCCESS en cas de succès
+ * \brief Fonction principale
+ * 
+ * \return EXIT_SUCCESS en cas de succès
  */
 int main() {
     // Utilisation des typedef pour les tableaux de produits et de factures

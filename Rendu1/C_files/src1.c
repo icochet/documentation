@@ -2,7 +2,7 @@
  *
  * \file src1.c
  * 
- * \brief Programme src1
+ * \brief Programme pour afficher les détails d'un élève et d'un cours, calculer une moyenne et afficher un message de félicitation
  * 
  * \author Antoine Guillerm
  * 
