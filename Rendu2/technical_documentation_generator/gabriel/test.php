@@ -1,4 +1,8 @@
 <?php       
-            $ressource = fopen('ELIMINATION_Version1.c', 'rb');
-            echo fread($ressource, filesize('ELIMINATION_Version1.c'));
+            $ressource = file('ELIMINATION_Version1.c');
+            foreach($ressource as $ligne) {
+                foreach($ligne as $lettre){
+
+                }
+            }
         ?>
