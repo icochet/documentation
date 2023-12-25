@@ -4,8 +4,17 @@
     $lines = file("doc.md");
 
     foreach ($lines as $numLine => $line) {
-        $lines[$numLine] = rtrim($line);
+        $line = rtrim($line); // supprime le \n de fin de ligne
+
+        if ($line === "") {
+            unset($lines[$numLine]); // si la ligne est vide alors elle est supprimée du tableau
+        } else {
+            $lines[$numLine] = $line; // sinon le tableau est mis à jour
+        }
     }
+    $lines = array_values($lines); // réindex le tableau (pour que les indices se suivent)
+
+    print_r($lines);
 ?>
 <!DOCTYPE html>
 
@@ -14,13 +23,15 @@
     <title>Générateur de documentation utilisateur</title>
 </head>
 <body>
-    <?php
-        foreach ($lines as $numLine => $line) {
-    ?>
-
-    <?php
-        }
-    ?>
+    <ul>
+        <?php
+            foreach ($lines as $numLine => $line) {
+        ?>
+        <li><?php echo "$numLine : $line"?></li>
+        <?php
+            }
+        ?>
+    </ul>
 </body>
 </html>
 <?php
