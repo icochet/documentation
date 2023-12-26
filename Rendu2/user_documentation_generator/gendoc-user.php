@@ -22,42 +22,44 @@
 </head>
 <body>
     <?php
-		foreach ($lines as $numLine => $line) {
+		foreach ($lines as $line) {
             $fc = $line[0]; // fc = first character
 
             if ($fc == '#') {
                 $splitLine = explode(" ", $line);
-                $hashLen = strlen($splitLine[0]); // on récupère le nombre de "#"
+                $hashLen = strlen($splitLine[0]); // récupère le nombre de "#"
+                unset($splitLine[0]); // enlève tous les "#" de la string
+                $line = implode(" ", $splitLine); // la ligne mais sans les "#"
 
                 switch ($hashLen) {
                     case 1:
     ?>
-                        <h1></h1>
+                        <h1><?php echo $line ?></h1>
     <?php
                         break;
                     case 2:
     ?>
-                        <h2></h2>
+                        <h2><?php echo $line ?></h2>
     <?php
                         break;
                     case 3:
     ?>
-                        <h3></h3>
+                        <h3><?php echo $line ?></h3>
     <?php
                         break;
                     case 4:
     ?>
-                        <h4></h4>
+                        <h4><?php echo $line ?></h4>
     <?php
                         break;
                     case 5:
     ?>
-                        <h5></h5>
+                        <h5><?php echo $line ?></h5>
     <?php
                         break;
                     case 6:
     ?>
-                        <h6></h6>
+                        <h6><?php echo $line ?></h6>
     <?php
                         break;
                 }
