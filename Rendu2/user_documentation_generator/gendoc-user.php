@@ -52,16 +52,6 @@
                         <h4><?php echo $line ?></h4>
     <?php
                         break;
-                    case 5:
-    ?>
-                        <h5><?php echo $line ?></h5>
-    <?php
-                        break;
-                    case 6:
-    ?>
-                        <h6><?php echo $line ?></h6>
-    <?php
-                        break;
                 }
             }
     ?>
