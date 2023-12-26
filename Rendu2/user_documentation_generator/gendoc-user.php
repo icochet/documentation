@@ -34,7 +34,7 @@
                 switch ($hashLen) {
                     case 1:
     ?>
-                        <h1><?php echo $line ?></h1>
+                        <h1 style="text-align: center;"><?php echo $line ?></h1>
     <?php
                         break;
                     case 2:
