@@ -13,8 +13,6 @@
         }
     }
     $lines = array_values($lines); // réindex le tableau (pour que les indices se suivent)
-
-    print_r($lines);
 ?>
 <!DOCTYPE html>
 
@@ -23,19 +21,55 @@
     <title>Générateur de documentation utilisateur</title>
 </head>
 <body>
-    <ul>
-        <?php
-            foreach ($lines as $numLine => $line) {
-        ?>
-        <li><?php echo "$numLine : $line"?></li>
-        <?php
+    <?php
+		foreach ($lines as $numLine => $line) {
+            $fc = $line[0]; // fc = first character
+
+            if ($fc == '#') {
+                $splitLine = explode(" ", $line);
+                $hashLen = strlen($splitLine[0]); // on récupère le nombre de "#"
+
+                switch ($hashLen) {
+                    case 1:
+    ?>
+                        <h1></h1>
+    <?php
+                        break;
+                    case 2:
+    ?>
+                        <h2></h2>
+    <?php
+                        break;
+                    case 3:
+    ?>
+                        <h3></h3>
+    <?php
+                        break;
+                    case 4:
+    ?>
+                        <h4></h4>
+    <?php
+                        break;
+                    case 5:
+    ?>
+                        <h5></h5>
+    <?php
+                        break;
+                    case 6:
+    ?>
+                        <h6></h6>
+    <?php
+                        break;
+                }
             }
-        ?>
-    </ul>
+    ?>
+    <?php
+        }
+    ?>
 </body>
 </html>
 <?php
-    $content_md = implode("\n", $lines);
+    // $content_md = implode("\n", $lines);
 
-    file_put_contents("doc-user-1.0.0.html", $content_md);
+    // file_put_contents("doc-user-1.0.0.html", $content_md);
 ?>

@@ -19,6 +19,8 @@
 
 ## Ipsum dolor 3
 
+Utilisez la commande `./gendoc` pour générer la documentation.
+
 ```
 int main() {
     printf("Lorem Ipsum\n");
