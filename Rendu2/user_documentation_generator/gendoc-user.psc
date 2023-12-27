@@ -20,7 +20,7 @@
                 $fc = ligne[0]; // je prend le premier caractère de la ligne (fc = first character)
                 si c'est un "#" alors:
                     $hashLen = 1; // nombre de "#"
-                    tant que ($ligne[$hashLen] == #) faire
+                    tant que ($ligne[$hashLen] == '#') faire
                         $hashLen++;
                     finfaire
                     si $ligne[$hashLen] == " " alors: // c'est bien un titre

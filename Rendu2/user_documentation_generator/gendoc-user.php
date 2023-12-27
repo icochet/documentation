@@ -4,7 +4,8 @@
     $lines = file("doc.md");
 
     foreach ($lines as $numLine => $line) {
-        $line = rtrim($line); // supprime le \n de fin de ligne
+        // $line = rtrim($line); // supprime le \n de fin de ligne
+        $lines[$numLine] = rtrim($line); // supprime le \n de fin de ligne
 
         // if ($line === "") {
         //     unset($lines[$numLine]); // si la ligne est vide alors elle est supprimée du tableau
@@ -23,42 +24,53 @@
 <body>
     <?php
         foreach ($lines as $line) {
-            $fc = $line[0]; // fc = first character
+            $continue; // une variable booleenne qui servira pour les listes et les tableaux
 
-            if ($fc == '#') {
-                $splitLine = explode(" ", $line);
-                $hashLen = strlen($splitLine[0]); // récupère le nombre de "#"
-                unset($splitLine[0]); // enlève tous les "#" de la string
-                $line = implode(" ", $splitLine); // la ligne mais sans les "#"
+            if (empty(trim($line))) { // check si la ligne est vide ou avec seulement des whitespaces
+                $continue = false;
+            } else {
+                $fc = $line[0]; // fc = first character
 
-                switch ($hashLen) {
-                    case 1:
+                if ($fc == '#') {
+                    $hashLen = 1; // nombre de "#"
+
+                    while ($line[$hashLen] == '#') {
+                        $hashLen++;
+                    }
+                    if ($line[$hashLen] == " ") { // c'est bien un titre
+                        switch ($hashLen) {
+                            case 1:
     ?>
-                        <h1 style="text-align: center;"><?php echo $line ?></h1>
+                                <h1 style="text-align: center;"><?php echo $line ?></h1>
     <?php
-                        break;
-                    case 2:
+                                break;
+                            case 2:
     ?>
-                        <h2><?php echo $line ?></h2>
+                                <h2><?php echo $line ?></h2>
     <?php
-                        break;
-                    case 3:
+                                break;
+                            case 3:
     ?>
-                        <h3><?php echo $line ?></h3>
+                                <h3><?php echo $line ?></h3>
     <?php
-                        break;
-                    case 4:
+                                break;
+                            case 4:
     ?>
-                        <h4><?php echo $line ?></h4>
+                                <h4><?php echo $line ?></h4>
     <?php
-                        break;
+                                break;
+                            default:
+    ?>
+                                <p><?php echo $line ?></p>
+    <?php
+                        }
+                    } else { // c'est juste un texte qui commence par "#"
+    ?>
+                        <p><?php echo $line ?></p>
+    <?php
+                    }
                 }
             }
-            else if ($fc == '-') {
-                
-            }
-    ?>
-    <?php
         }
     ?>
 </body>
