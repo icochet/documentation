@@ -5,7 +5,7 @@
 
     foreach ($lines as $numLine => $line) {
         // $line = rtrim($line); // supprime le \n de fin de ligne
-        $lines[$numLine] = rtrim($line); // supprime le \n de fin de ligne
+        $lines[$numLine] = trim($line); // supprime le \n de fin de ligne et tous les whitespaces
 
         // if ($line === "") {
         //     unset($lines[$numLine]); // si la ligne est vide alors elle est supprimée du tableau
@@ -26,7 +26,7 @@
         foreach ($lines as $line) {
             $continue; // une variable booleenne qui servira pour les listes et les tableaux
 
-            if (empty(trim($line))) { // check si la ligne est vide ou avec seulement des whitespaces
+            if (empty($line)) {
                 $continue = false;
             } else {
                 $fc = $line[0]; // fc = first character
@@ -38,6 +38,10 @@
                         $hashLen++;
                     }
                     if ($line[$hashLen] == " ") { // c'est bien un titre
+                        $splitLine = explode(" ", $line);
+                        unset($splitLine[0]); // supprime tous les "#" de la ligne
+                        $line = implode(" ", $splitLine); // la ligne mais sans les "#"
+
                         switch ($hashLen) {
                             case 1:
     ?>
