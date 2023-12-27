@@ -40,27 +40,27 @@
                     if ($line[$hashLen] == " ") { // c'est bien un titre
                         $splitLine = explode(" ", $line);
                         unset($splitLine[0]); // supprime tous les "#" de la ligne
-                        $line = implode(" ", $splitLine); // la ligne mais sans les "#"
+                        $lineWtHash = implode(" ", $splitLine); // la ligne mais sans les "#" (line without hash)
 
                         switch ($hashLen) {
                             case 1:
     ?>
-                                <h1 style="text-align: center;"><?php echo $line ?></h1>
+                                <h1 style="text-align: center;"><?php echo $lineWtHash ?></h1>
     <?php
                                 break;
                             case 2:
     ?>
-                                <h2><?php echo $line ?></h2>
+                                <h2><?php echo $lineWtHash ?></h2>
     <?php
                                 break;
                             case 3:
     ?>
-                                <h3><?php echo $line ?></h3>
+                                <h3><?php echo $lineWtHash ?></h3>
     <?php
                                 break;
                             case 4:
     ?>
-                                <h4><?php echo $line ?></h4>
+                                <h4><?php echo $lineWtHash ?></h4>
     <?php
                                 break;
                             default:
