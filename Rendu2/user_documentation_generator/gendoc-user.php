@@ -24,10 +24,16 @@
 <body>
     <?php
         foreach ($lines as $line) {
-            $continue; // une variable booleenne qui servira pour les listes
+            $listStarted = false;
 
             if (empty($line)) {
-                $continue = false;
+                if ($listStarted) {
+    ?>
+                    </li> <!-- je ferme le dernier élément de la liste -->
+                    </ul> <!-- je ferme la liste -->
+    <?php
+                    $listStarted = false;
+                }
             } else {
                 $fc = $line[0]; // fc = first character
 
@@ -73,7 +79,29 @@
                     }
                 }
                 elseif ($fc == '-') {
-
+                    if ($line[1] == " ") { // c'est bien une liste
+                        if (!$listStarted) {
+    ?>
+                            <ul>
+                            <li><?php echo $line ?>
+    <?php
+                            $listStarted = true;
+                        } else {
+    ?>
+                            </li>
+                            <li><?php echo $line ?>
+    <?php
+                        }
+                    } else { // c'est juste un texte qui commence par "-"
+    ?>
+                        <p><?php echo $line ?></p>
+    <?php
+                    }
+                }
+                else { // alors c'est un texte normal
+                    if ($listStarted) {
+                        echo $line; // sans balises car il vient se mettre à la suite des autres <li>
+                    }
                 }
 
             }
