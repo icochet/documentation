@@ -6,13 +6,13 @@
     foreach ($lines as $numLine => $line) {
         $line = rtrim($line); // supprime le \n de fin de ligne
 
-        if ($line === "") {
-            unset($lines[$numLine]); // si la ligne est vide alors elle est supprimée du tableau
-        } else {
-            $lines[$numLine] = $line; // sinon le tableau est mis à jour
-        }
+        // if ($line === "") {
+        //     unset($lines[$numLine]); // si la ligne est vide alors elle est supprimée du tableau
+        // } else {
+        //     $lines[$numLine] = $line; // sinon le tableau est mis à jour
+        // }
     }
-    $lines = array_values($lines); // réindex le tableau (pour que les indices se suivent)
+    // $lines = array_values($lines); // réindex le tableau (pour que les indices se suivent)
 ?>
 <!DOCTYPE html>
 
@@ -22,7 +22,7 @@
 </head>
 <body>
     <?php
-		foreach ($lines as $line) {
+        foreach ($lines as $line) {
             $fc = $line[0]; // fc = first character
 
             if ($fc == '#') {
@@ -53,6 +53,9 @@
     <?php
                         break;
                 }
+            }
+            else if ($fc == '-') {
+                
             }
     ?>
     <?php
