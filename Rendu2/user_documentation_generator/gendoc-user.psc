@@ -13,9 +13,12 @@
 <body>
     <?php
         pour chaque $ligne de $lignes:
-            $listStarted; // une variable booleenne qui servira pour les listes
+            $listStarted = faux; // une variable booleenne qui servira pour les listes
             si la ligne est vide (ou avec juste des espaces) alors:
-                $listStarted = faux;
+                si listStarted:
+                    </li> // je ferme le dernier élément de la liste
+                    </ul> // je ferme la liste
+                    $listStarted = faux;
             sinon
                 $fc = ligne[0]; // je prend le premier caractère de la ligne (fc = first character)
                 si c'est un "#" alors:
@@ -35,8 +38,13 @@
 
                 sinonsi c'est un "-" alors:
                     si $ligne[1] == " " alors: // c'est bien une liste
-                        $listStarted = vrai; // tant qu'on ne trouve pas une ligne vide alors la liste continue
-
+                        si listStarted == faux alors:
+                            <ul> // j'ouvre la liste
+                            $listStarted = vrai;
+                            <li>le contenu
+                        sinon:
+                            </li>
+                            <li>le contenu
 
 
                     sinon: // c'est juste un texte qui commence par "-"
@@ -49,6 +57,9 @@
                 sinonsi c'est un "[" alors:
 
                 sinon: // alors c'est un texte normal
+                    si listStarted:
+                        le contenu // sans balises car il vient se mettre à la suite des autres
+
     ?>
 </body>
 </html>
