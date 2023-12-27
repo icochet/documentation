@@ -24,7 +24,7 @@
 <body>
     <?php
         foreach ($lines as $line) {
-            $continue; // une variable booleenne qui servira pour les listes et les tableaux
+            $continue; // une variable booleenne qui servira pour les listes
 
             if (empty($line)) {
                 $continue = false;
@@ -38,9 +38,7 @@
                         $hashLen++;
                     }
                     if ($line[$hashLen] == " ") { // c'est bien un titre
-                        $splitLine = explode(" ", $line);
-                        unset($splitLine[0]); // supprime tous les "#" de la ligne
-                        $lineWtHash = implode(" ", $splitLine); // la ligne mais sans les "#" (line without hash)
+                        $lineWtHash = trim(substr($line, $hashLen)); // supprime les "#" de la ligne et les whitespaces
 
                         switch ($hashLen) {
                             case 1:
@@ -74,6 +72,10 @@
     <?php
                     }
                 }
+                elseif ($fc == '-') {
+
+                }
+
             }
         }
     ?>
