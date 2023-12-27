@@ -12,8 +12,8 @@
 </head>
 <body>
     <?php
+        $listStarted = faux; // une variable booleenne qui servira pour les listes
         pour chaque $ligne de $lignes:
-            $listStarted = faux; // une variable booleenne qui servira pour les listes
             si la ligne est vide (ou avec juste des espaces) alors:
                 si listStarted:
                     </li> // je ferme le dernier élément de la liste

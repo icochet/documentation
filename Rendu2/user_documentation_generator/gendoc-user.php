@@ -23,14 +23,13 @@
 </head>
 <body>
     <?php
+        $listStarted = false;
         foreach ($lines as $line) {
-            $listStarted = false;
-
             if (empty($line)) {
                 if ($listStarted) {
     ?>
-                    </li> <!-- je ferme le dernier élément de la liste -->
-                    </ul> <!-- je ferme la liste -->
+                    </li><?php // je ferme le dernier élément de la liste ?>
+                    </ul><?php // je ferme la liste ?>
     <?php
                     $listStarted = false;
                 }
