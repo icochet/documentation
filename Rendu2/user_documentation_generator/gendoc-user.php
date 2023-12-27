@@ -72,9 +72,13 @@
     <?php
                         }
                     } else { // c'est juste un texte qui commence par "#"
+                        if ($listStarted) { // si une liste a démarrée, alors ne pas mettre de balises
+                            echo $line;
+                        } else {
     ?>
-                        <p><?php echo $line ?></p>
+                            <p><?php echo $line ?></p>
     <?php
+                        }
                     }
                 }
                 elseif ($fc == '-') {
@@ -94,9 +98,13 @@
     <?php
                         }
                     } else { // c'est juste un texte qui commence par "-"
+                        if ($listStarted) { // si une liste a démarrée, alors ne pas mettre de balises
+                            echo $line;
+                        } else {
     ?>
-                        <p><?php echo $line ?></p>
+                            <p><?php echo $line ?></p>
     <?php
+                        }
                     }
                 }
                 else { // alors c'est un texte normal
