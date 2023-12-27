@@ -79,16 +79,18 @@
                 }
                 elseif ($fc == '-') {
                     if ($line[1] == " ") { // c'est bien une liste
+                        $lineWtDash = trim(substr($line, 1)); // supprime le "-" de la ligne et les whitespaces
+
                         if (!$listStarted) {
     ?>
                             <ul>
-                            <li><?php echo $line ?>
+                            <li><?php echo $lineWtDash ?>
     <?php
                             $listStarted = true;
                         } else {
     ?>
                             </li>
-                            <li><?php echo $line ?>
+                            <li><?php echo $lineWtDash ?>
     <?php
                         }
                     } else { // c'est juste un texte qui commence par "-"
