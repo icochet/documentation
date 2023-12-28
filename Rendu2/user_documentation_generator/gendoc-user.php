@@ -189,13 +189,36 @@
 
                 }
                 elseif ($fc == '[') {
-
+                    
                 }
                 else { // alors c'est un texte normal
                     if ($listStarted) {
                         echo $line; // sans balises car il vient se mettre à la suite des autres <li>
                     } elseif ($tableStarted) {
-                        
+                        if (!$skip) {
+                            $tableContent = explode('|', trim($line, '|'));
+                            foreach ($tableContent as $numTitle => $title) {
+                                $tableContent[$numTitle] = trim($title);
+                            }
+    ?>
+                            <tr>
+    <?php
+                                for ($i = 0; $i < count($tableContent); $i++) {
+    ?>
+                                    <td><?php echo $tableContent[$i] ?></td>
+    <?php
+                                }
+                                for ($j = 0; $j < ($detailLineNb - count($tableContent)); $j++) {
+    ?>
+                                    <td></td>
+    <?php
+                                }
+    ?>
+                            </tr>
+    <?php
+                        } else {
+                            $skip = false;
+                        }
                     } else {
     ?>
                         <p><?php echo $line ?></p>
