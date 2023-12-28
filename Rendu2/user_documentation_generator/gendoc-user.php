@@ -19,7 +19,7 @@
 
 <html lang="fr">
 <head>
-    <title>Générateur de documentation utilisateur</title>
+    <title>Documentation utilisateur</title>
 </head>
 <body>
     <?php
@@ -110,6 +110,10 @@
                 else { // alors c'est un texte normal
                     if ($listStarted) {
                         echo $line; // sans balises car il vient se mettre à la suite des autres <li>
+                    } else {
+    ?>
+                        <p><?php echo $line ?></p>
+    <?php
                     }
                 }
 
