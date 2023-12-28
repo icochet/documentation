@@ -114,6 +114,7 @@
                 elseif ($fc == '|') {
                     if (!$tableStarted) {
                         $detailLine = trim($lines[$numLine + 1], '|'); // récupère la ligne d'après sans whitespaces et sans le pipe avant et après la ligne
+                        if (empty($detailLine)) $detailLine = 0; // pour éviter une erreur sur la condition ($detailLineSplit[0][0] == '-'), si c'est vide on set à 0
                         $detailLineSplit = explode('|', $detailLine); // récupère tous les "-" du tableau
                         foreach ($detailLineSplit as $detailKey => $detailValue) {
                             $detailLineSplit[$detailKey] = trim($detailValue);
