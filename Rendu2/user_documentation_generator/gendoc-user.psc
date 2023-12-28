@@ -65,8 +65,8 @@
                             <thead>
                             <tr>
 
-                            pour i de 0 à $detailLineNb:
-                                <th>titles[i]</th>
+                            pour $i de 0 à $detailLineNb:
+                                <th>$titles[$i]</th>
                             
                             </tr>
                             </thead>

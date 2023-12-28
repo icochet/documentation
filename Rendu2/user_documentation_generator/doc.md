@@ -7,11 +7,11 @@
 ####### DOLOR
 
 - aliquip
-ex ea 1
+#ex ea 1
 - aliquip
-#ex ea 2
+-ex ea 2
 - aliquip
--ex ea 3
+ex ea 3
 
 #### Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 

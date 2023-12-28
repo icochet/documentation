@@ -112,12 +112,47 @@
                     }
                 }
                 elseif ($fc == '|') {
-                    $detailLine = $lines[$numLine + 1];
-                    $detailLine = trim($detailLine, '|');
-                    $detailLineSplit = explode('|', $detailLine);
-                    foreach ($detailLineSplit as $detailKey => $detailValue) {
-                        $detailLineSplit[$detailKey] = trim($detailValue);
+                    if (!$tableStarted) {
+                        $detailLine = trim($lines[$numLine + 1], '|'); // récupère la ligne d'après sans whitespaces et sans le pipe avant et après la ligne
+                        $detailLineSplit = explode('|', $detailLine); // récupère tous les "-" du tableau
+                        foreach ($detailLineSplit as $detailKey => $detailValue) {
+                            $detailLineSplit[$detailKey] = trim($detailValue);
+                        }
+                        
+                        if ($detailLineSplit[0][0] == '-') { // c'est bien un tableau
+                            $detailLineNb = count($detailLineSplit); // nb de colonnes de détail
+                            $titles = explode('|', trim($line, '|'));
+                            foreach ($titles as $numTitle => $title) {
+                                $titles[$numTitle] = trim($title);
+                            }
+    ?>
+                            <table>
+                            <thead>
+                            <tr>
+    <?php
+                            for ($i = 0; $i < $detailLineNb; $i++) {
+    ?>
+                                <th><?php echo $titles[$i] ?></th>
+    <?php
+                            }
+    ?>
+                            </tr>
+                            </thead>
+                            <tbody>
+    <?php
+                        } else { // c'est juste un texte qui commence par "|"
+                            if ($listStarted) { // si une liste a démarrée, alors ne pas mettre de balises
+                                echo $line;
+                            } else {
+    ?>
+                                <p><?php echo $line ?></p>
+    <?php
+                            }
+                        }
+
+                        $tableStarted = true;
                     }
+
                 }
                 elseif ($fc == '`') {
 
