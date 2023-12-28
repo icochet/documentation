@@ -156,22 +156,27 @@
                         }
 
                         $tableStarted = true;
+                        $skip = true;
                     } else {
-                        $tableContent = explode('|', trim($line, '|'));
-                        foreach ($tableContent as $numTitle => $title) {
-                            $tableContent[$numTitle] = trim($title);
-                        }
-    ?>
-                        <tr>
-    <?php
-                            for ($i = 0; $i < $detailLineNb; $i++) {
-    ?>
-                                <td><?php echo $tableContent[$i] ?></td>
-    <?php
+                        if (!$skip) {
+                            $tableContent = explode('|', trim($line, '|'));
+                            foreach ($tableContent as $numTitle => $title) {
+                                $tableContent[$numTitle] = trim($title);
                             }
     ?>
-                        </tr>
+                            <tr>
     <?php
+                                for ($i = 0; $i < $detailLineNb; $i++) {
+    ?>
+                                    <td><?php echo $tableContent[$i] ?></td>
+    <?php
+                                }
+    ?>
+                            </tr>
+    <?php
+                        } else {
+                            $skip = false;
+                        }
                     }
 
                 }
