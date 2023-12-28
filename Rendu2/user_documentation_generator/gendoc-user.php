@@ -35,6 +35,10 @@
                     $listStarted = false;
                 }
                 if ($tableStarted) {
+    ?>
+                    </tbody><?php // je ferme le corps de la table ?>
+                    </table><?php // je ferme la table ?>
+    <?php
                     $tableStarted = false;
                 }
             } else {
@@ -122,9 +126,9 @@
                         
                         if ($detailLineSplit[0][0] == '-') { // c'est bien un tableau
                             $detailLineNb = count($detailLineSplit); // nb de colonnes de détail
-                            $titles = explode('|', trim($line, '|'));
-                            foreach ($titles as $numTitle => $title) {
-                                $titles[$numTitle] = trim($title);
+                            $tableTitles = explode('|', trim($line, '|'));
+                            foreach ($tableTitles as $numTitle => $title) {
+                                $tableTitles[$numTitle] = trim($title);
                             }
     ?>
                             <table>
@@ -133,7 +137,7 @@
     <?php
                             for ($i = 0; $i < $detailLineNb; $i++) {
     ?>
-                                <th><?php echo $titles[$i] ?></th>
+                                <th><?php echo $tableTitles[$i] ?></th>
     <?php
                             }
     ?>
@@ -152,6 +156,22 @@
                         }
 
                         $tableStarted = true;
+                    } else {
+                        $tableContent = explode('|', trim($line, '|'));
+                        foreach ($tableContent as $numTitle => $title) {
+                            $tableContent[$numTitle] = trim($title);
+                        }
+    ?>
+                        <tr>
+    <?php
+                            for ($i = 0; $i < $detailLineNb; $i++) {
+    ?>
+                                <td><?php echo $tableContent[$i] ?></td>
+    <?php
+                            }
+    ?>
+                        </tr>
+    <?php
                     }
 
                 }
@@ -164,6 +184,8 @@
                 else { // alors c'est un texte normal
                     if ($listStarted) {
                         echo $line; // sans balises car il vient se mettre à la suite des autres <li>
+                    } elseif ($tableStarted) {
+
                     } else {
     ?>
                         <p><?php echo $line ?></p>

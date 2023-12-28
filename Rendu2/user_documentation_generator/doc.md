@@ -19,7 +19,6 @@
 
 | Excepteur 1 | Excepteur 2 | Excepteur 3 |
 |       --|-     |------|
-test 123
 | 1 | sint | lorem@ipsum.com |
 | 2 | culpa | dolor@sitamet.com |
 
