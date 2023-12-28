@@ -166,9 +166,14 @@
     ?>
                             <tr>
     <?php
-                                for ($i = 0; $i < $detailLineNb; $i++) {
+                                for ($i = 0; $i < count($tableContent); $i++) {
     ?>
                                     <td><?php echo $tableContent[$i] ?></td>
+    <?php
+                                }
+                                for ($j = 0; $j < ($detailLineNb - count($tableContent)); $j++) {
+    ?>
+                                    <td></td>
     <?php
                                 }
     ?>
@@ -190,7 +195,7 @@
                     if ($listStarted) {
                         echo $line; // sans balises car il vient se mettre à la suite des autres <li>
                     } elseif ($tableStarted) {
-
+                        
                     } else {
     ?>
                         <p><?php echo $line ?></p>
