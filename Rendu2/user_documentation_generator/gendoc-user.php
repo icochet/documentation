@@ -107,6 +107,15 @@
                         }
                     }
                 }
+                elseif ($fc == '|') {
+
+                }
+                elseif ($fc == '`') {
+
+                }
+                elseif ($fc == '[') {
+
+                }
                 else { // alors c'est un texte normal
                     if ($listStarted) {
                         echo $line; // sans balises car il vient se mettre à la suite des autres <li>
