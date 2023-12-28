@@ -24,6 +24,7 @@
 <body>
     <?php
         $listStarted = false;
+        $tableStarted = false;
         foreach ($lines as $numLine => $line) {
             if (empty($line)) {
                 if ($listStarted) {
@@ -32,6 +33,9 @@
                     </ul><?php // je ferme la liste ?>
     <?php
                     $listStarted = false;
+                }
+                if ($tableStarted) {
+                    $tableStarted = false;
                 }
             } else {
                 $fc = $line[0]; // fc = first character
@@ -108,7 +112,12 @@
                     }
                 }
                 elseif ($fc == '|') {
-                    
+                    $detailLine = $lines[$numLine + 1];
+                    $detailLine = trim($detailLine, '|');
+                    $detailLineSplit = explode('|', $detailLine);
+                    foreach ($detailLineSplit as $detailKey => $detailValue) {
+                        $detailLineSplit[$detailKey] = trim($detailValue);
+                    }
                 }
                 elseif ($fc == '`') {
 
