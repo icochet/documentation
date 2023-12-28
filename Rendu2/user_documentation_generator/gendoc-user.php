@@ -24,7 +24,7 @@
 <body>
     <?php
         $listStarted = false;
-        foreach ($lines as $line) {
+        foreach ($lines as $numLine => $line) {
             if (empty($line)) {
                 if ($listStarted) {
     ?>
@@ -108,7 +108,7 @@
                     }
                 }
                 elseif ($fc == '|') {
-
+                    
                 }
                 elseif ($fc == '`') {
 
