@@ -163,6 +163,12 @@
                             foreach ($tableContent as $numTitle => $title) {
                                 $tableContent[$numTitle] = trim($title);
                             }
+                            $tableContentLen = count($tableContent);
+                            if ($tableContentLen > $detailLineNb) {
+                                for ($h = $tableContentLen - 1; $h >= $tableContentLen - $detailLineNb; $h--) {
+                                    unset($tableContent[$h]);
+                                }
+                            }
     ?>
                             <tr>
     <?php
