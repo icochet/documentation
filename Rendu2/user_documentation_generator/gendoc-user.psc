@@ -14,6 +14,7 @@
     <?php
         $listStarted = faux; // une variable booleenne qui servira pour les listes
         $tableStarted = faux;
+        $preformatStarted = faux;
         pour chaque $numLigne et $ligne de $lignes:
             si la ligne est vide (ou avec juste des espaces) alors:
                 si $listStarted:
@@ -77,6 +78,12 @@
 
 
                 sinonsi c'est un "`" alors:
+                    si $ligne[1] == "`" et $ligne[2] == "`" alors:
+                        si $preformatStarted == faux alors:
+                            <pre>
+                            $preformatStarted = vrai;
+                        sinon:
+                            </pre>
 
                 sinonsi c'est un "[" alors:
 
