@@ -16,7 +16,9 @@
         $tableStarted = faux;
         $preformatStarted = faux;
         pour chaque $numLigne et $ligne de $lignes:
-            si la ligne est vide (ou avec juste des espaces) alors:
+            si $preformatStarted == vrai alors:
+                echo $ligne;
+            sinonsi la ligne est vide (ou avec juste des espaces) alors:
                 si $listStarted:
                     </li> // je ferme le dernier élément de la liste
                     </ul> // je ferme la liste
