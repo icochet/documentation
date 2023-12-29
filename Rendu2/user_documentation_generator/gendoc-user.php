@@ -25,8 +25,11 @@
     <?php
         $listStarted = false;
         $tableStarted = false;
+        $preformatStarted = false;
         foreach ($lines as $numLine => $line) {
-            if (empty($line)) {
+            if ($preformatStarted) {
+                echo $line;
+            } elseif (empty($line)) {
                 if ($listStarted) {
     ?>
                     </li><?php // je ferme le dernier élément de la liste ?>
@@ -192,7 +195,18 @@
 
                 }
                 elseif ($fc == '`') {
-
+                    if ($line[1] == '`' && $line[2] == '`') {
+                        if (!$preformatStarted) {
+    ?>
+                            <pre>
+    <?php
+                            $preformatStarted = true;
+                        } else {
+    ?>
+                            </pre>
+    <?php
+                        }
+                    }
                 }
                 elseif ($fc == '[') {
                     
