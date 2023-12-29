@@ -46,7 +46,7 @@
                 $fc = $line[0]; // fc = first character
 
                 if ($preformatStarted && ($fc != '`')) {
-                    echo $line;
+                    echo $line . "\n";
                 } elseif ($fc == '#') {
                     $hashLen = 1; // nombre de "#"
 
