@@ -32,6 +32,7 @@ Utilisez la commande `./gendoc-user` pour générer la documentation.
 ```
 int main() {
     printf("Lorem Ipsum\n");
+    
     return EXIT_SUCCESS;
 }
 ```

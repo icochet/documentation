@@ -43,7 +43,7 @@
                     $tableStarted = false;
                 }
             } else {
-                $fc = $line[0]; // fc = first character
+                !empty($line) ? $fc = $line[0] : $fc = ""; // fc = first character
 
                 if ($preformatStarted && ($fc != '`')) {
                     echo $line . "\n";
