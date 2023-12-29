@@ -88,7 +88,7 @@
                             </pre>
 
                 sinonsi c'est un "[" alors:
-
+                    
                 sinon: // alors c'est un texte normal
                     si $listStarted:
                         le contenu // sans balises car il vient se mettre à la suite des autres

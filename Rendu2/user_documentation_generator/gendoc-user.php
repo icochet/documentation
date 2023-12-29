@@ -203,7 +203,24 @@
                     }
                 }
                 elseif ($fc == '[') {
-                    
+                    $pattern = '/\[([^\]]+)\]\(([^)]+)\)/'; // regex pour extraire le texte et le lien
+                    preg_match($pattern, $line, $matches);
+
+                    if (count($matches) == 3) { // alors c'est bien un lien
+                        $linkText = $matches[1];
+                        $link = $matches[2];
+    ?>
+                        <a href="<?php echo $link ?>"><?php echo $linkText ?></a>
+    <?php
+                    } else { // alors c'est juste un texte qui commence par "["
+                        if ($listStarted) {
+                            echo $line; // sans balises car il vient se mettre à la suite des autres <li>
+                        } else {
+    ?>
+                        <p><?php echo $line ?></p>
+    <?php
+                        }
+                    }
                 }
                 else { // alors c'est un texte normal
                     if ($listStarted) {
