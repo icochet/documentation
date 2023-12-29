@@ -4,16 +4,8 @@
     $lines = file("doc.md");
 
     foreach ($lines as $numLine => $line) {
-        // $line = rtrim($line); // supprime le \n de fin de ligne
         $lines[$numLine] = trim($line); // supprime le \n de fin de ligne et tous les whitespaces
-
-        // if ($line === "") {
-        //     unset($lines[$numLine]); // si la ligne est vide alors elle est supprimée du tableau
-        // } else {
-        //     $lines[$numLine] = $line; // sinon le tableau est mis à jour
-        // }
     }
-    // $lines = array_values($lines); // réindex le tableau (pour que les indices se suivent)
 ?>
 <!DOCTYPE html>
 
@@ -47,7 +39,8 @@
 
                 if ($preformatStarted && ($fc != '`')) {
                     echo $line . "\n";
-                } elseif ($fc == '#') {
+                }
+                elseif ($fc == '#') {
                     $hashLen = 1; // nombre de "#"
 
                     while ($line[$hashLen] == '#') {
@@ -246,14 +239,8 @@
     <?php
                     }
                 }
-
             }
         }
     ?>
 </body>
 </html>
-<?php
-    // $content_md = implode("\n", $lines);
-
-    // file_put_contents("doc-user-1.0.0.html", $content_md);
-?>
