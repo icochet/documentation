@@ -27,9 +27,7 @@
         $tableStarted = false;
         $preformatStarted = false;
         foreach ($lines as $numLine => $line) {
-            if ($preformatStarted) {
-                echo $line;
-            } elseif (empty($line)) {
+            if (empty($line) && !$preformatStarted) {
                 if ($listStarted) {
     ?>
                     </li><?php // je ferme le dernier élément de la liste ?>
@@ -47,7 +45,9 @@
             } else {
                 $fc = $line[0]; // fc = first character
 
-                if ($fc == '#') {
+                if ($preformatStarted && ($fc != '`')) {
+                    echo $line;
+                } elseif ($fc == '#') {
                     $hashLen = 1; // nombre de "#"
 
                     while ($line[$hashLen] == '#') {
@@ -205,6 +205,7 @@
     ?>
                             </pre>
     <?php
+                            $preformatStarted = false;
                         }
                     }
                 }
