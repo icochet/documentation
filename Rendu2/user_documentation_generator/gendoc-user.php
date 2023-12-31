@@ -23,21 +23,21 @@
             if (empty($line) && !$preformatStarted) {
                 if ($listStarted) {
     ?>
-                    </li><?php // je ferme le dernier élément de la liste ?>
-                    </ul><?php // je ferme la liste ?>
+                    </li><?php // ferme le dernier élément de la liste ?>
+                    </ul><?php // ferme la liste ?>
     <?php
                     $listStarted = false;
                 }
                 if ($tableStarted) {
     ?>
-                    </tbody><?php // je ferme le corps de la table ?>
-                    </table><?php // je ferme la table ?>
+                    </tbody><?php // ferme le corps de la table ?>
+                    </table><?php // ferme la table ?>
     <?php
                     $tableStarted = false;
                 }
                 if ($paragraphStarted) {
     ?>
-                    </p>
+                    </p><?php // ferme le paragraphe ?>
     <?php
                     $paragraphStarted = false;
                 }
@@ -230,12 +230,12 @@
                     }
                 }
                 elseif ($fc == '[') {
-                    $pattern = '/\[([^\]]+)\]\(([^)]+)\)/'; // regex pour extraire le texte et le lien
-                    preg_match($pattern, $line, $matches);
+                    $linkPattern = '/\[([^\]]+)\]\(([^)]+)\)/'; // regex pour extraire le texte et le lien
+                    preg_match($linkPattern, $line, $linkMatches);
 
-                    if (count($matches) == 3) { // alors c'est bien un lien
-                        $linkText = $matches[1];
-                        $link = $matches[2];
+                    if (count($linkMatches) == 3) { // alors c'est bien un lien
+                        $linkText = $linkMatches[1];
+                        $link = $linkMatches[2];
     ?>
                         <a href="<?php echo $link ?>"><?php echo $linkText ?></a>
     <?php
@@ -282,6 +282,28 @@
                         }
                     } elseif ($paragraphStarted) {
                         echo $line;
+                        $Paragraphpattern = '/\*\*\*(.*?)\*\*\*|\*\*(.*?)\*\*|\*(.*?)\*/';
+
+                        preg_match_all($Paragraphpattern, $line, $paragraphMatches);
+                        $paragraphMatchesLen = count($paragraphMatches[0]);
+
+                        for ($i = 1; $i <= 3; $i++) {
+                            for ($j = 0; $j < $paragraphMatchesLen; $j++) {
+                                if (($i == 1) && !empty($paragraphMatches[$i][$j])) {
+    ?>
+                                    <b><i><?php $paragraphMatches[$i][$j] ?></i></b>
+    <?php
+                                } elseif (($i == 2) && !empty($paragraphMatches[$i][$j])) {
+    ?>
+                                    <b><?php $paragraphMatches[$i][$j] ?></b>
+    <?php
+                                } elseif (($i == 3) && !empty($paragraphMatches[$i][$j])) {
+    ?>
+                                    <i><?php $paragraphMatches[$i][$j] ?></i>
+    <?php
+                                }
+                            }
+                        }
                     } else {
     ?>
                         <p><?php echo $line ?>
