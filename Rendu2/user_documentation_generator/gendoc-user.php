@@ -6,6 +6,16 @@
     foreach ($lines as $numLine => $line) {
         $lines[$numLine] = trim($line); // supprime le \n de fin de ligne et tous les whitespaces
     }
+
+    // Fonctions
+
+    function paragraphFormat($line) {
+        $line = preg_replace('/\*\*\*(.*?)\*\*\*/', '<b><i>$1</i></b>', $line); // bold + italic
+        $line = preg_replace('/\*\*(.*?)\*\*/', '<b>$1</b>', $line); // bold
+        $line = preg_replace('/\*(.*?)\*/', '<i>$1</i>', $line); // italic
+
+        return $line;
+    }
 ?>
 <!DOCTYPE html>
 
@@ -84,6 +94,8 @@
     <?php
                         }
                     } else { // c'est juste un texte qui commence par "#"
+                        $line = paragraphFormat($line);
+                        
                         if ($listStarted) { // si une liste a démarrée, alors ne pas mettre de balises
                             echo $line;
                         } elseif ($paragraphStarted) {
@@ -113,6 +125,8 @@
     <?php
                         }
                     } else { // c'est juste un texte qui commence par "-"
+                        $line = paragraphFormat($line);
+
                         if ($listStarted) { // si une liste a démarrée, alors ne pas mettre de balises
                             echo $line;
                         } elseif ($paragraphStarted) {
@@ -158,6 +172,8 @@
                             $tableStarted = true;
                             $skip = true;
                         } else { // c'est juste un texte qui commence par "|"
+                            $line = paragraphFormat($line);
+
                             if ($listStarted) { // si une liste a démarrée, alors ne pas mettre de balises
                                 echo $line;
                             } elseif ($paragraphStarted) {
@@ -217,6 +233,8 @@
                             $preformatStarted = false;
                         }
                     } else { // alors c'est juste un texte qui commence par "`"
+                        $line = paragraphFormat($line);
+
                         if ($listStarted) {
                             echo $line; // sans balises car il vient se mettre à la suite des autres <li>
                         } elseif ($paragraphStarted) {
@@ -240,6 +258,8 @@
                         <a href="<?php echo $link ?>"><?php echo $linkText ?></a>
     <?php
                     } else { // alors c'est juste un texte qui commence par "["
+                        $line = paragraphFormat($line);
+                        
                         if ($listStarted) {
                             echo $line; // sans balises car il vient se mettre à la suite des autres <li>
                         } elseif ($paragraphStarted) {
@@ -281,12 +301,10 @@
                             $skip = false;
                         }
                     } elseif ($paragraphStarted) {
-                        $line = preg_replace('/\*\*\*(.*?)\*\*\*/', '<b><i>$1</i></b>', $line); // bold + italic
-                        $line = preg_replace('/\*\*(.*?)\*\*/', '<b>$1</b>', $line); // bold
-                        $line = preg_replace('/\*(.*?)\*/', '<i>$1</i>', $line); // italic
-
+                        $line = paragraphFormat($line);
                         echo $line;
                     } else {
+                        $line = paragraphFormat($line);
     ?>
                         <p><?php echo $line ?>
     <?php
