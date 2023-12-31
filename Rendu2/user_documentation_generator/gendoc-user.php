@@ -120,7 +120,7 @@
                             $detailLineSplit[$detailKey] = trim($detailValue);
                         }
                         
-                        if ($detailLineSplit[0][0] == '-') { // c'est bien un tableau
+                        if (($detailLineSplit[0][0] == '-') && !$listStarted) { // c'est bien un tableau
                             $detailLineNb = count($detailLineSplit); // nb de colonnes de détail
                             $tableTitles = explode('|', trim($line, '|'));
                             foreach ($tableTitles as $numTitle => $title) {
