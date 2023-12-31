@@ -36,6 +36,8 @@
                 }
             } else {
                 !empty($line) ? $fc = $line[0] : $fc = ""; // fc = first character
+                // echo $line;
+                echo $tableStarted;
 
                 if ($preformatStarted && ($fc != '`')) {
                     echo $line . "\n";
@@ -141,6 +143,8 @@
                             </thead>
                             <tbody>
     <?php
+                            $tableStarted = true;
+                            $skip = true;
                         } else { // c'est juste un texte qui commence par "|"
                             if ($listStarted) { // si une liste a démarrée, alors ne pas mettre de balises
                                 echo $line;
@@ -150,9 +154,6 @@
     <?php
                             }
                         }
-
-                        $tableStarted = true;
-                        $skip = true;
                     } else {
                         if (!$skip) {
                             $tableContent = explode('|', trim($line, '|'));
