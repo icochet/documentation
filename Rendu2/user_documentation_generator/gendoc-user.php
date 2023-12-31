@@ -13,6 +13,7 @@
         $line = preg_replace('/\*\*\*(.*?)\*\*\*/', '<b><i>$1</i></b>', $line); // bold + italic
         $line = preg_replace('/\*\*(.*?)\*\*/', '<b>$1</b>', $line); // bold
         $line = preg_replace('/\*(.*?)\*/', '<i>$1</i>', $line); // italic
+        $line = preg_replace('/`([^`]+)`/', '<span style="font-family: \'Courier New\', Courier, monospace;">$1</span>', $line); // backticks
 
         return $line;
     }
@@ -225,7 +226,7 @@
                     if ($line[1] == '`' && $line[2] == '`') {
                         if (!$preformatStarted) {
     ?>
-                            <pre>
+                            <pre style="font-family: 'Courier New', Courier, monospace;">
     <?php
                             $preformatStarted = true;
                         } else {
