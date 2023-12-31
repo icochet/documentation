@@ -18,6 +18,7 @@
         $listStarted = false;
         $tableStarted = false;
         $preformatStarted = false;
+        $paragraphStarted = false;
         foreach ($lines as $numLine => $line) {
             if (empty($line) && !$preformatStarted) {
                 if ($listStarted) {
@@ -34,10 +35,15 @@
     <?php
                     $tableStarted = false;
                 }
+                if ($paragraphStarted) {
+    ?>
+                    </p>
+    <?php
+                    $paragraphStarted = false;
+                }
             } else {
                 !empty($line) ? $fc = $line[0] : $fc = ""; // fc = first character
                 // echo $line;
-                echo $tableStarted;
 
                 if ($preformatStarted && ($fc != '`')) {
                     echo $line . "\n";
@@ -80,10 +86,13 @@
                     } else { // c'est juste un texte qui commence par "#"
                         if ($listStarted) { // si une liste a démarrée, alors ne pas mettre de balises
                             echo $line;
+                        } elseif ($paragraphStarted) {
+                            echo $line;
                         } else {
-    ?>
-                            <p><?php echo $line ?></p>
-    <?php
+        ?>
+                            <p><?php echo $line ?>
+        <?php
+                            $paragraphStarted = true;
                         }
                     }
                 }
@@ -106,10 +115,13 @@
                     } else { // c'est juste un texte qui commence par "-"
                         if ($listStarted) { // si une liste a démarrée, alors ne pas mettre de balises
                             echo $line;
+                        } elseif ($paragraphStarted) {
+                            echo $line;
                         } else {
-    ?>
-                            <p><?php echo $line ?></p>
-    <?php
+        ?>
+                            <p><?php echo $line ?>
+        <?php
+                            $paragraphStarted = true;
                         }
                     }
                 }
@@ -148,10 +160,13 @@
                         } else { // c'est juste un texte qui commence par "|"
                             if ($listStarted) { // si une liste a démarrée, alors ne pas mettre de balises
                                 echo $line;
+                            } elseif ($paragraphStarted) {
+                                echo $line;
                             } else {
-    ?>
-                                <p><?php echo $line ?></p>
-    <?php
+            ?>
+                                <p><?php echo $line ?>
+            <?php
+                                $paragraphStarted = true;
                             }
                         }
                     } else {
@@ -201,6 +216,17 @@
     <?php
                             $preformatStarted = false;
                         }
+                    } else { // alors c'est juste un texte qui commence par "`"
+                        if ($listStarted) {
+                            echo $line; // sans balises car il vient se mettre à la suite des autres <li>
+                        } elseif ($paragraphStarted) {
+                            echo $line;
+                        } else {
+        ?>
+                            <p><?php echo $line ?>
+        <?php
+                            $paragraphStarted = true;
+                        }
                     }
                 }
                 elseif ($fc == '[') {
@@ -216,10 +242,13 @@
                     } else { // alors c'est juste un texte qui commence par "["
                         if ($listStarted) {
                             echo $line; // sans balises car il vient se mettre à la suite des autres <li>
+                        } elseif ($paragraphStarted) {
+                            echo $line;
                         } else {
     ?>
-                        <p><?php echo $line ?></p>
+                            <p><?php echo $line ?>
     <?php
+                            $paragraphStarted = true;
                         }
                     }
                 }
@@ -251,10 +280,13 @@
                         } else {
                             $skip = false;
                         }
+                    } elseif ($paragraphStarted) {
+                        echo $line;
                     } else {
     ?>
-                        <p><?php echo $line ?></p>
+                        <p><?php echo $line ?>
     <?php
+                        $paragraphStarted = true;
                     }
                 }
             }
