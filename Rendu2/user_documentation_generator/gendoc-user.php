@@ -281,29 +281,11 @@
                             $skip = false;
                         }
                     } elseif ($paragraphStarted) {
+                        $line = preg_replace('/\*\*\*(.*?)\*\*\*/', '<b><i>$1</i></b>', $line); // bold + italic
+                        $line = preg_replace('/\*\*(.*?)\*\*/', '<b>$1</b>', $line); // bold
+                        $line = preg_replace('/\*(.*?)\*/', '<i>$1</i>', $line); // italic
+
                         echo $line;
-                        $Paragraphpattern = '/\*\*\*(.*?)\*\*\*|\*\*(.*?)\*\*|\*(.*?)\*/';
-
-                        preg_match_all($Paragraphpattern, $line, $paragraphMatches);
-                        $paragraphMatchesLen = count($paragraphMatches[0]);
-
-                        for ($i = 1; $i <= 3; $i++) {
-                            for ($j = 0; $j < $paragraphMatchesLen; $j++) {
-                                if (($i == 1) && !empty($paragraphMatches[$i][$j])) {
-    ?>
-                                    <b><i><?php $paragraphMatches[$i][$j] ?></i></b>
-    <?php
-                                } elseif (($i == 2) && !empty($paragraphMatches[$i][$j])) {
-    ?>
-                                    <b><?php $paragraphMatches[$i][$j] ?></b>
-    <?php
-                                } elseif (($i == 3) && !empty($paragraphMatches[$i][$j])) {
-    ?>
-                                    <i><?php $paragraphMatches[$i][$j] ?></i>
-    <?php
-                                }
-                            }
-                        }
                     } else {
     ?>
                         <p><?php echo $line ?>
