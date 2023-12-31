@@ -19,13 +19,13 @@
 
 ## Ipsum dolor 2
 
-| Excepteur 1 | Excepteur 2 | Excepteur 3 |
+| Excepteur 1 | Excepteur 2 | *Excepteur 3* |
 |       --|-     |------|
-| 1 | sint | lorem@ipsum.com |
-| 2 | mea  | dolor@sitamet.com |
-| 3 |
+| 1 | sint | **lorem@ipsum.com** |
+| 2 | *mea*  | dolor@sitamet.com |
+| **3** |
   4 | culpa
-| 5 | lore | ipsu | dolo | si | ame |
+| 5 | ***lore*** | ipsu | dolo | si | ame |
 
 ## Ipsum dolor 3
 

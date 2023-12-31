@@ -95,7 +95,7 @@
                         }
                     } else { // c'est juste un texte qui commence par "#"
                         $line = paragraphFormat($line);
-                        
+
                         if ($listStarted) { // si une liste a démarrée, alors ne pas mettre de balises
                             echo $line;
                         } elseif ($paragraphStarted) {
@@ -140,6 +140,8 @@
                     }
                 }
                 elseif ($fc == '|') {
+                    $line = paragraphFormat($line);
+                    
                     if (!$tableStarted) {
                         $detailLine = trim($lines[$numLine + 1], '|'); // récupère la ligne d'après sans whitespaces et sans le pipe avant et après la ligne
                         if (empty($detailLine)) $detailLine = 0; // pour éviter une erreur sur la condition ($detailLineSplit[0][0] == '-'), si c'est vide on set à 0
