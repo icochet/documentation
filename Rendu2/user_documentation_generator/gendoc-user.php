@@ -116,6 +116,30 @@
             convertSimpleText($line);
         }
     }
+    function convertList($line) {
+        global $listStarted;
+
+        if ($line[1] == " ") { // c'est bien une liste
+            $lineWithoutDash = trim(substr($line, 1)); // supprime le "-" de la ligne et les whitespaces
+
+            if (!$listStarted) {
+?>
+                <ul>
+                <li><?php echo $lineWithoutDash ?>
+<?php
+                $listStarted = true;
+            }
+            else {
+?>
+                </li>
+                <li><?php echo $lineWithoutDash ?>
+<?php
+            }
+        }
+        else { // c'est juste un texte qui commence par "-"
+            convertSimpleText($line);
+        }
+    }
 ?>
 <!DOCTYPE html>
 
@@ -158,26 +182,7 @@
                     convertTitle($line);
                 }
                 elseif ($fc == '-') {
-                    if ($line[1] == " ") { // c'est bien une liste
-                        $lineWtDash = trim(substr($line, 1)); // supprime le "-" de la ligne et les whitespaces
-
-                        if (!$listStarted) {
-    ?>
-                            <ul>
-                            <li><?php echo $lineWtDash ?>
-    <?php
-                            $listStarted = true;
-                        }
-                        else {
-    ?>
-                            </li>
-                            <li><?php echo $lineWtDash ?>
-    <?php
-                        }
-                    }
-                    else { // c'est juste un texte qui commence par "-"
-                        convertSimpleText($line);
-                    }
+                    convertList($line);
                 }
                 elseif ($fc == '|') {
                     $line = specialFormats($line);
