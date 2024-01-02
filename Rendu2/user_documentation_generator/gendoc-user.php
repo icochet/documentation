@@ -9,7 +9,7 @@
 
     // Fonctions
 
-    function paragraphFormat($line) {
+    function specialFormat($line) {
         $line = preg_replace('/\*\*\*(.*?)\*\*\*/', '<b><i>$1</i></b>', $line); // bold + italic
         $line = preg_replace('/\*\*(.*?)\*\*/', '<b>$1</b>', $line); // bold
         $line = preg_replace('/\*(.*?)\*/', '<i>$1</i>', $line); // italic
@@ -95,7 +95,7 @@
     <?php
                         }
                     } else { // c'est juste un texte qui commence par "#"
-                        $line = paragraphFormat($line);
+                        $line = specialFormat($line);
 
                         if ($listStarted) { // si une liste a démarrée, alors ne pas mettre de balises
                             echo $line;
@@ -126,7 +126,7 @@
     <?php
                         }
                     } else { // c'est juste un texte qui commence par "-"
-                        $line = paragraphFormat($line);
+                        $line = specialFormat($line);
 
                         if ($listStarted) { // si une liste a démarrée, alors ne pas mettre de balises
                             echo $line;
@@ -141,7 +141,7 @@
                     }
                 }
                 elseif ($fc == '|') {
-                    $line = paragraphFormat($line);
+                    $line = specialFormat($line);
                     
                     if (!$tableStarted) {
                         $detailLine = trim($lines[$numLine + 1], '|'); // récupère la ligne d'après sans whitespaces et sans le pipe avant et après la ligne
@@ -175,7 +175,7 @@
                             $tableStarted = true;
                             $skip = true;
                         } else { // c'est juste un texte qui commence par "|"
-                            $line = paragraphFormat($line);
+                            $line = specialFormat($line);
 
                             if ($listStarted) { // si une liste a démarrée, alors ne pas mettre de balises
                                 echo $line;
@@ -236,7 +236,7 @@
                             $preformatStarted = false;
                         }
                     } else { // alors c'est juste un texte qui commence par "`"
-                        $line = paragraphFormat($line);
+                        $line = specialFormat($line);
 
                         if ($listStarted) {
                             echo $line; // sans balises car il vient se mettre à la suite des autres <li>
@@ -261,7 +261,7 @@
                         <a href="<?php echo $link ?>"><?php echo $linkText ?></a>
     <?php
                     } else { // alors c'est juste un texte qui commence par "["
-                        $line = paragraphFormat($line);
+                        $line = specialFormat($line);
                         
                         if ($listStarted) {
                             echo $line; // sans balises car il vient se mettre à la suite des autres <li>
@@ -304,10 +304,10 @@
                             $skip = false;
                         }
                     } elseif ($paragraphStarted) {
-                        $line = paragraphFormat($line);
+                        $line = specialFormat($line);
                         echo $line;
                     } else {
-                        $line = paragraphFormat($line);
+                        $line = specialFormat($line);
     ?>
                         <p><?php echo $line ?>
     <?php
