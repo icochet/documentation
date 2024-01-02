@@ -1,5 +1,4 @@
 #!/usr/bin/php
-
 <?php
     $lines = file("doc.md");
 
@@ -46,20 +45,20 @@
                     $tableContent[$numTitle] = trim($title);
                 }
 ?>
-                <tr>
+            <tr>
 <?php
                     for ($i = 0; $i < count($tableContent); $i++) {
 ?>
-                        <td><?php echo $tableContent[$i] ?></td>
+                <td><?php echo $tableContent[$i] ?></td>
 <?php
                     }
                     for ($j = 0; $j < ($detailLineNb - count($tableContent)); $j++) {
 ?>
-                        <td></td>
+                <td></td>
 <?php
                     }
 ?>
-                </tr>
+            </tr>
 <?php
             } else {
                 $skip = false;
@@ -88,27 +87,27 @@
             switch ($hashLen) {
                 case 1:
 ?>
-                    <h1 style="text-align: center;"><?php echo $lineWithoutHash ?></h1>
+<h1 style="text-align: center;"><?php echo $lineWithoutHash ?></h1>
 <?php
                     break;
                 case 2:
 ?>
-                    <h2><?php echo $lineWithoutHash ?></h2>
+    <h2><?php echo $lineWithoutHash ?></h2>
 <?php
                     break;
                 case 3:
 ?>
-                    <h3><?php echo $lineWithoutHash ?></h3>
+    <h3><?php echo $lineWithoutHash ?></h3>
 <?php
                     break;
                 case 4:
 ?>
-                    <h4><?php echo $lineWithoutHash ?></h4>
+<h4><?php echo $lineWithoutHash ?></h4>
 <?php
                     break;
                 default:
 ?>
-                    <p><?php echo $line ?></p>
+    <p><?php echo $line ?></p>
 <?php
             }
         }
@@ -126,15 +125,15 @@
 
             if (!$listStarted) {
 ?>
-                <ul>
-                <li><?php echo $lineWithoutDash ?>
+    <ul>
+        <li><?php echo $lineWithoutDash ?>
 <?php
                 $listStarted = true;
             }
             else {
 ?>
-                </li>
-                <li><?php echo $lineWithoutDash ?>
+</li>
+        <li><?php echo $lineWithoutDash ?>
 <?php
             }
         }
@@ -165,19 +164,19 @@
                     $tableTitles[$numTitle] = trim($title);
                 }
 ?>
-                <table>
-                <thead>
-                <tr>
+    <table>
+        <thead>
+            <tr>
 <?php
                 for ($i = 0; $i < $detailLineNb; $i++) {
 ?>
-                    <th><?php echo $tableTitles[$i] ?></th>
+                <th><?php echo $tableTitles[$i] ?></th>
 <?php
                 }
 ?>
-                </tr>
-                </thead>
-                <tbody>
+            </tr>
+        </thead>
+        <tbody>
 <?php
                 $tableStarted = true;
                 $skip = true;
@@ -199,20 +198,20 @@
                     }
                 }
 ?>
-                <tr>
+            <tr>
 <?php
                     for ($i = 0; $i < count($tableContent); $i++) {
 ?>
-                        <td><?php echo $tableContent[$i] ?></td>
+                <td><?php echo $tableContent[$i] ?></td>
 <?php
                     }
                     for ($j = 0; $j < ($detailLineNb - count($tableContent)); $j++) {
 ?>
-                        <td></td>
+                <td></td>
 <?php
                     }
 ?>
-                </tr>
+            </tr>
 <?php
             }
             else {
@@ -226,13 +225,13 @@
         if ($line[1] == '`' && $line[2] == '`') {
             if (!$preformatStarted) {
 ?>
-                <pre style="font-family: 'Courier New', Courier, monospace;">
+<pre style="font-family: 'Courier New', Courier, monospace;">
 <?php
                 $preformatStarted = true;
             }
             else {
 ?>
-                </pre>
+</pre>
 <?php
                 $preformatStarted = false;
             }
@@ -261,26 +260,32 @@
     <title>Documentation utilisateur</title>
 </head>
 <body>
+
     <?php
         foreach ($lines as $numLine => $line) {
             if (empty($line) && !$preformatStarted) {
                 if ($listStarted) {
     ?>
-                    </li><?php // ferme le dernier élément de la liste ?>
-                    </ul><?php // ferme la liste ?>
+</li><?php // ferme le dernier élément de la liste ?>
+
+    </ul><?php // ferme la liste ?>
+
     <?php
                     $listStarted = false;
                 }
                 if ($tableStarted) {
     ?>
-                    </tbody><?php // ferme le corps de la table ?>
-                    </table><?php // ferme la table ?>
+        </tbody><?php // ferme le corps de la table ?>
+    
+    </table><?php // ferme la table ?>
+    
     <?php
                     $tableStarted = false;
                 }
                 if ($paragraphStarted) {
     ?>
-                    </p><?php // ferme le paragraphe ?>
+</p><?php // ferme le paragraphe ?>
+
     <?php
                     $paragraphStarted = false;
                 }
@@ -312,5 +317,6 @@
             }
         }
     ?>
+
 </body>
 </html>
