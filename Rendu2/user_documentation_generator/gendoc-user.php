@@ -236,20 +236,20 @@
 <?php
                 $preformatStarted = false;
             }
-        } else { // alors c'est juste un texte qui commence par "`"
+        } else { // c'est juste un texte qui commence par "`"
             convertSimpleText($line);
         }
     }
     function convertLink($line) {
         preg_match('/\[([^\]]+)\]\(([^)]+)\)/', $line, $matches); // regex pour extraire le texte et le lien
 
-        if (count($matches) == 3) { // alors c'est bien un lien (base + texte + lien = 3)
+        if (count($matches) == 3) { // c'est bien un lien (base + texte + lien = 3)
             $text = $matches[1];
             $link = $matches[2];
 ?>
             <a href="<?php echo $link ?>"><?php echo $text ?></a>
 <?php
-        } else { // alors c'est juste un texte qui commence par "["
+        } else { // c'est juste un texte qui commence par "["
             convertSimpleText($line);
         }
     }
@@ -291,22 +291,22 @@
                 if ($preformatStarted && ($fc != '`')) {
                     echo $line . "\n";
                 }
-                elseif ($fc == '#') {
+                elseif ($fc == '#') { // titres
                     convertTitle($line);
                 }
-                elseif ($fc == '-') {
+                elseif ($fc == '-') { // listes
                     convertList($line);
                 }
-                elseif ($fc == '|') {
+                elseif ($fc == '|') { // tableaux
                     convertTable($lines, $numLine ,$line);
                 }
-                elseif ($fc == '`') {
+                elseif ($fc == '`') { // code
                     convertPreformat($line);
                 }
-                elseif ($fc == '[') {
+                elseif ($fc == '[') { // URL
                     convertLink($line);
                 }
-                else { // alors c'est un texte normal
+                else { // textes
                     convertSimpleText($line);
                 }
             }
