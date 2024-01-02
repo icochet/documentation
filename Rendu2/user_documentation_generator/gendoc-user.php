@@ -240,6 +240,19 @@
             convertSimpleText($line);
         }
     }
+    function convertLink($line) {
+        preg_match('/\[([^\]]+)\]\(([^)]+)\)/', $line, $matches); // regex pour extraire le texte et le lien
+
+        if (count($matches) == 3) { // alors c'est bien un lien (base + texte + lien = 3)
+            $text = $matches[1];
+            $link = $matches[2];
+?>
+            <a href="<?php echo $link ?>"><?php echo $text ?></a>
+<?php
+        } else { // alors c'est juste un texte qui commence par "["
+            convertSimpleText($line);
+        }
+    }
 ?>
 <!DOCTYPE html>
 
@@ -291,19 +304,7 @@
                     convertPreformat($line);
                 }
                 elseif ($fc == '[') {
-                    $linkPattern = '/\[([^\]]+)\]\(([^)]+)\)/'; // regex pour extraire le texte et le lien
-                    preg_match($linkPattern, $line, $linkMatches);
-
-                    if (count($linkMatches) == 3) { // alors c'est bien un lien
-                        $linkText = $linkMatches[1];
-                        $link = $linkMatches[2];
-    ?>
-                        <a href="<?php echo $link ?>"><?php echo $linkText ?></a>
-    <?php
-                    }
-                    else { // alors c'est juste un texte qui commence par "["
-                        convertSimpleText($line);
-                    }
+                    convertLink($line);
                 }
                 else { // alors c'est un texte normal
                     convertSimpleText($line);
