@@ -119,6 +119,8 @@
     function convertList($line) {
         global $listStarted;
 
+        $line = specialFormats($line);
+
         if ($line[1] == " ") { // c'est bien une liste
             $lineWithoutDash = trim(substr($line, 1)); // supprime le "-" de la ligne et les whitespaces
 
@@ -138,6 +140,84 @@
         }
         else { // c'est juste un texte qui commence par "-"
             convertSimpleText($line);
+        }
+    }
+    function convertTable($lines, $numLine ,$line) {
+        global $listStarted;
+        global $tableStarted;
+        global $detailLineNb;
+        global $skip;
+
+        $line = specialFormats($line);
+
+        if (!$tableStarted) {
+            $detailLine = trim($lines[$numLine + 1], '|'); // récupère la ligne d'après sans whitespaces et sans le pipe avant et après la ligne
+            if (empty($detailLine)) $detailLine = 0; // pour éviter une erreur sur la condition ($detailLineSplit[0][0] == '-'), si c'est vide on set à 0
+            $detailLineSplit = explode('|', $detailLine); // récupère tous les "-" du tableau
+            foreach ($detailLineSplit as $detailKey => $detailValue) {
+                $detailLineSplit[$detailKey] = trim($detailValue);
+            }
+            
+            if (($detailLineSplit[0][0] == '-') && !$listStarted) { // c'est bien un tableau
+                $detailLineNb = count($detailLineSplit); // nb de colonnes de détail
+                $tableTitles = explode('|', trim($line, '|'));
+                foreach ($tableTitles as $numTitle => $title) {
+                    $tableTitles[$numTitle] = trim($title);
+                }
+?>
+                <table>
+                <thead>
+                <tr>
+<?php
+                for ($i = 0; $i < $detailLineNb; $i++) {
+?>
+                    <th><?php echo $tableTitles[$i] ?></th>
+<?php
+                }
+?>
+                </tr>
+                </thead>
+                <tbody>
+<?php
+                $tableStarted = true;
+                $skip = true;
+            }
+            else { // c'est juste un texte qui commence par "|"
+                convertSimpleText($line);
+            }
+        }
+        else {
+            if (!$skip) {
+                $tableContent = explode('|', trim($line, '|'));
+                foreach ($tableContent as $numTitle => $title) {
+                    $tableContent[$numTitle] = trim($title);
+                }
+                $tableContentLen = count($tableContent);
+                if ($tableContentLen > $detailLineNb) {
+                    for ($h = $tableContentLen - 1; $h >= $tableContentLen - $detailLineNb; $h--) {
+                        unset($tableContent[$h]);
+                    }
+                }
+?>
+                <tr>
+<?php
+                    for ($i = 0; $i < count($tableContent); $i++) {
+?>
+                        <td><?php echo $tableContent[$i] ?></td>
+<?php
+                    }
+                    for ($j = 0; $j < ($detailLineNb - count($tableContent)); $j++) {
+?>
+                        <td></td>
+<?php
+                    }
+?>
+                </tr>
+<?php
+            }
+            else {
+                $skip = false;
+            }
         }
     }
 ?>
@@ -185,78 +265,7 @@
                     convertList($line);
                 }
                 elseif ($fc == '|') {
-                    $line = specialFormats($line);
-                    
-                    if (!$tableStarted) {
-                        $detailLine = trim($lines[$numLine + 1], '|'); // récupère la ligne d'après sans whitespaces et sans le pipe avant et après la ligne
-                        if (empty($detailLine)) $detailLine = 0; // pour éviter une erreur sur la condition ($detailLineSplit[0][0] == '-'), si c'est vide on set à 0
-                        $detailLineSplit = explode('|', $detailLine); // récupère tous les "-" du tableau
-                        foreach ($detailLineSplit as $detailKey => $detailValue) {
-                            $detailLineSplit[$detailKey] = trim($detailValue);
-                        }
-                        
-                        if (($detailLineSplit[0][0] == '-') && !$listStarted) { // c'est bien un tableau
-                            $detailLineNb = count($detailLineSplit); // nb de colonnes de détail
-                            $tableTitles = explode('|', trim($line, '|'));
-                            foreach ($tableTitles as $numTitle => $title) {
-                                $tableTitles[$numTitle] = trim($title);
-                            }
-    ?>
-                            <table>
-                            <thead>
-                            <tr>
-    <?php
-                            for ($i = 0; $i < $detailLineNb; $i++) {
-    ?>
-                                <th><?php echo $tableTitles[$i] ?></th>
-    <?php
-                            }
-    ?>
-                            </tr>
-                            </thead>
-                            <tbody>
-    <?php
-                            $tableStarted = true;
-                            $skip = true;
-                        }
-                        else { // c'est juste un texte qui commence par "|"
-                            convertSimpleText($line);
-                        }
-                    }
-                    else {
-                        if (!$skip) {
-                            $tableContent = explode('|', trim($line, '|'));
-                            foreach ($tableContent as $numTitle => $title) {
-                                $tableContent[$numTitle] = trim($title);
-                            }
-                            $tableContentLen = count($tableContent);
-                            if ($tableContentLen > $detailLineNb) {
-                                for ($h = $tableContentLen - 1; $h >= $tableContentLen - $detailLineNb; $h--) {
-                                    unset($tableContent[$h]);
-                                }
-                            }
-    ?>
-                            <tr>
-    <?php
-                                for ($i = 0; $i < count($tableContent); $i++) {
-    ?>
-                                    <td><?php echo $tableContent[$i] ?></td>
-    <?php
-                                }
-                                for ($j = 0; $j < ($detailLineNb - count($tableContent)); $j++) {
-    ?>
-                                    <td></td>
-    <?php
-                                }
-    ?>
-                            </tr>
-    <?php
-                        }
-                        else {
-                            $skip = false;
-                        }
-                    }
-
+                    convertTable($lines, $numLine ,$line);
                 }
                 elseif ($fc == '`') {
                     if ($line[1] == '`' && $line[2] == '`') {

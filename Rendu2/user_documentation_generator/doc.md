@@ -8,7 +8,7 @@
 
 - aliquip
 #*ex ea 1*
-- aliquip
+- *aliquip*
 -ex ea 2
 - aliquip
 |**ex ea 3**
