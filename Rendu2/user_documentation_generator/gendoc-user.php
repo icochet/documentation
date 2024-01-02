@@ -76,6 +76,46 @@
         }
 
     }
+    function convertTitle($line) {
+        $hashLen = 1; // nombre de "#"
+
+        while ($line[$hashLen] == '#') {
+            $hashLen++;
+        }
+        if ($line[$hashLen] == " ") { // c'est bien un titre
+            $lineWithoutHash = trim(substr($line, $hashLen)); // supprime les "#" de la ligne et les whitespaces
+
+            switch ($hashLen) {
+                case 1:
+?>
+                    <h1 style="text-align: center;"><?php echo $lineWithoutHash ?></h1>
+<?php
+                    break;
+                case 2:
+?>
+                    <h2><?php echo $lineWithoutHash ?></h2>
+<?php
+                    break;
+                case 3:
+?>
+                    <h3><?php echo $lineWithoutHash ?></h3>
+<?php
+                    break;
+                case 4:
+?>
+                    <h4><?php echo $lineWithoutHash ?></h4>
+<?php
+                    break;
+                default:
+?>
+                    <p><?php echo $line ?></p>
+<?php
+            }
+        }
+        else { // c'est juste un texte qui commence par "#"
+            convertSimpleText($line);
+        }
+    }
 ?>
 <!DOCTYPE html>
 
@@ -110,50 +150,12 @@
             }
             else {
                 !empty($line) ? $fc = $line[0] : $fc = ""; // fc = first character
-                // echo $line;
 
                 if ($preformatStarted && ($fc != '`')) {
                     echo $line . "\n";
                 }
                 elseif ($fc == '#') {
-                    $hashLen = 1; // nombre de "#"
-
-                    while ($line[$hashLen] == '#') {
-                        $hashLen++;
-                    }
-                    if ($line[$hashLen] == " ") { // c'est bien un titre
-                        $lineWtHash = trim(substr($line, $hashLen)); // supprime les "#" de la ligne et les whitespaces
-
-                        switch ($hashLen) {
-                            case 1:
-    ?>
-                                <h1 style="text-align: center;"><?php echo $lineWtHash ?></h1>
-    <?php
-                                break;
-                            case 2:
-    ?>
-                                <h2><?php echo $lineWtHash ?></h2>
-    <?php
-                                break;
-                            case 3:
-    ?>
-                                <h3><?php echo $lineWtHash ?></h3>
-    <?php
-                                break;
-                            case 4:
-    ?>
-                                <h4><?php echo $lineWtHash ?></h4>
-    <?php
-                                break;
-                            default:
-    ?>
-                                <p><?php echo $line ?></p>
-    <?php
-                        }
-                    }
-                    else { // c'est juste un texte qui commence par "#"
-                        convertSimpleText($line);
-                    }
+                    convertTitle($line);
                 }
                 elseif ($fc == '-') {
                     if ($line[1] == " ") { // c'est bien une liste
