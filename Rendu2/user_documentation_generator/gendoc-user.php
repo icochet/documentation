@@ -7,15 +7,74 @@
         $lines[$numLine] = trim($line); // supprime le \n de fin de ligne et tous les whitespaces
     }
 
+    // Variables globales
+
+    $listStarted = false;
+    $tableStarted = false;
+    $preformatStarted = false;
+    $paragraphStarted = false;
+    $detailLineNb;
+    $skip;
+
+
     // Fonctions
 
-    function specialFormat($line) {
+    function specialFormats($line) {
         $line = preg_replace('/\*\*\*(.*?)\*\*\*/', '<b><i>$1</i></b>', $line); // bold + italic
         $line = preg_replace('/\*\*(.*?)\*\*/', '<b>$1</b>', $line); // bold
         $line = preg_replace('/\*(.*?)\*/', '<i>$1</i>', $line); // italic
-        $line = preg_replace('/`([^`]+)`/', '<span style="font-family: \'Courier New\', Courier, monospace;">$1</span>', $line); // backticks
+        $line = preg_replace('/`([^`]+)`/', '<span style="font-family: \'Courier New\', Courier, monospace;">$1</span>', $line); // simple backticks
 
         return $line;
+    }
+    function convertSimpleText($line) {
+        global $listStarted;
+        global $tableStarted;
+        global $paragraphStarted;
+        global $detailLineNb;
+        global $skip;
+
+        $line = specialFormats($line);
+
+        if ($listStarted) {
+            echo $line; // sans balises car il vient se mettre à la suite du contenu
+        }
+        elseif ($tableStarted) {
+            if (!$skip) {
+                $tableContent = explode('|', trim($line, '|'));
+                foreach ($tableContent as $numTitle => $title) {
+                    $tableContent[$numTitle] = trim($title);
+                }
+?>
+                <tr>
+<?php
+                    for ($i = 0; $i < count($tableContent); $i++) {
+?>
+                        <td><?php echo $tableContent[$i] ?></td>
+<?php
+                    }
+                    for ($j = 0; $j < ($detailLineNb - count($tableContent)); $j++) {
+?>
+                        <td></td>
+<?php
+                    }
+?>
+                </tr>
+<?php
+            } else {
+                $skip = false;
+            }
+        }
+        elseif ($paragraphStarted) {
+            echo $line; // sans balises car il vient se mettre à la suite du contenu
+        }
+        else {
+?>
+            <p><?php echo $line ?>
+<?php
+            $paragraphStarted = true;
+        }
+
     }
 ?>
 <!DOCTYPE html>
@@ -26,10 +85,6 @@
 </head>
 <body>
     <?php
-        $listStarted = false;
-        $tableStarted = false;
-        $preformatStarted = false;
-        $paragraphStarted = false;
         foreach ($lines as $numLine => $line) {
             if (empty($line) && !$preformatStarted) {
                 if ($listStarted) {
@@ -52,7 +107,8 @@
     <?php
                     $paragraphStarted = false;
                 }
-            } else {
+            }
+            else {
                 !empty($line) ? $fc = $line[0] : $fc = ""; // fc = first character
                 // echo $line;
 
@@ -94,19 +150,9 @@
                                 <p><?php echo $line ?></p>
     <?php
                         }
-                    } else { // c'est juste un texte qui commence par "#"
-                        $line = specialFormat($line);
-
-                        if ($listStarted) { // si une liste a démarrée, alors ne pas mettre de balises
-                            echo $line;
-                        } elseif ($paragraphStarted) {
-                            echo $line;
-                        } else {
-        ?>
-                            <p><?php echo $line ?>
-        <?php
-                            $paragraphStarted = true;
-                        }
+                    }
+                    else { // c'est juste un texte qui commence par "#"
+                        convertSimpleText($line);
                     }
                 }
                 elseif ($fc == '-') {
@@ -119,29 +165,20 @@
                             <li><?php echo $lineWtDash ?>
     <?php
                             $listStarted = true;
-                        } else {
+                        }
+                        else {
     ?>
                             </li>
                             <li><?php echo $lineWtDash ?>
     <?php
                         }
-                    } else { // c'est juste un texte qui commence par "-"
-                        $line = specialFormat($line);
-
-                        if ($listStarted) { // si une liste a démarrée, alors ne pas mettre de balises
-                            echo $line;
-                        } elseif ($paragraphStarted) {
-                            echo $line;
-                        } else {
-        ?>
-                            <p><?php echo $line ?>
-        <?php
-                            $paragraphStarted = true;
-                        }
+                    }
+                    else { // c'est juste un texte qui commence par "-"
+                        convertSimpleText($line);
                     }
                 }
                 elseif ($fc == '|') {
-                    $line = specialFormat($line);
+                    $line = specialFormats($line);
                     
                     if (!$tableStarted) {
                         $detailLine = trim($lines[$numLine + 1], '|'); // récupère la ligne d'après sans whitespaces et sans le pipe avant et après la ligne
@@ -174,21 +211,12 @@
     <?php
                             $tableStarted = true;
                             $skip = true;
-                        } else { // c'est juste un texte qui commence par "|"
-                            $line = specialFormat($line);
-
-                            if ($listStarted) { // si une liste a démarrée, alors ne pas mettre de balises
-                                echo $line;
-                            } elseif ($paragraphStarted) {
-                                echo $line;
-                            } else {
-            ?>
-                                <p><?php echo $line ?>
-            <?php
-                                $paragraphStarted = true;
-                            }
                         }
-                    } else {
+                        else { // c'est juste un texte qui commence par "|"
+                            convertSimpleText($line);
+                        }
+                    }
+                    else {
                         if (!$skip) {
                             $tableContent = explode('|', trim($line, '|'));
                             foreach ($tableContent as $numTitle => $title) {
@@ -216,7 +244,8 @@
     ?>
                             </tr>
     <?php
-                        } else {
+                        }
+                        else {
                             $skip = false;
                         }
                     }
@@ -229,25 +258,15 @@
                             <pre style="font-family: 'Courier New', Courier, monospace;">
     <?php
                             $preformatStarted = true;
-                        } else {
+                        }
+                        else {
     ?>
                             </pre>
     <?php
                             $preformatStarted = false;
                         }
                     } else { // alors c'est juste un texte qui commence par "`"
-                        $line = specialFormat($line);
-
-                        if ($listStarted) {
-                            echo $line; // sans balises car il vient se mettre à la suite des autres <li>
-                        } elseif ($paragraphStarted) {
-                            echo $line;
-                        } else {
-        ?>
-                            <p><?php echo $line ?>
-        <?php
-                            $paragraphStarted = true;
-                        }
+                        convertSimpleText($line);
                     }
                 }
                 elseif ($fc == '[') {
@@ -260,59 +279,13 @@
     ?>
                         <a href="<?php echo $link ?>"><?php echo $linkText ?></a>
     <?php
-                    } else { // alors c'est juste un texte qui commence par "["
-                        $line = specialFormat($line);
-                        
-                        if ($listStarted) {
-                            echo $line; // sans balises car il vient se mettre à la suite des autres <li>
-                        } elseif ($paragraphStarted) {
-                            echo $line;
-                        } else {
-    ?>
-                            <p><?php echo $line ?>
-    <?php
-                            $paragraphStarted = true;
-                        }
+                    }
+                    else { // alors c'est juste un texte qui commence par "["
+                        convertSimpleText($line);
                     }
                 }
                 else { // alors c'est un texte normal
-                    if ($listStarted) {
-                        echo $line; // sans balises car il vient se mettre à la suite des autres <li>
-                    } elseif ($tableStarted) {
-                        if (!$skip) {
-                            $tableContent = explode('|', trim($line, '|'));
-                            foreach ($tableContent as $numTitle => $title) {
-                                $tableContent[$numTitle] = trim($title);
-                            }
-    ?>
-                            <tr>
-    <?php
-                                for ($i = 0; $i < count($tableContent); $i++) {
-    ?>
-                                    <td><?php echo $tableContent[$i] ?></td>
-    <?php
-                                }
-                                for ($j = 0; $j < ($detailLineNb - count($tableContent)); $j++) {
-    ?>
-                                    <td></td>
-    <?php
-                                }
-    ?>
-                            </tr>
-    <?php
-                        } else {
-                            $skip = false;
-                        }
-                    } elseif ($paragraphStarted) {
-                        $line = specialFormat($line);
-                        echo $line;
-                    } else {
-                        $line = specialFormat($line);
-    ?>
-                        <p><?php echo $line ?>
-    <?php
-                        $paragraphStarted = true;
-                    }
+                    convertSimpleText($line);
                 }
             }
         }
