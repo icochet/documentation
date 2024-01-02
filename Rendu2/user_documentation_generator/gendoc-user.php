@@ -220,6 +220,26 @@
             }
         }
     }
+    function convertPreformat($line) {
+        global $preformatStarted;
+
+        if ($line[1] == '`' && $line[2] == '`') {
+            if (!$preformatStarted) {
+?>
+                <pre style="font-family: 'Courier New', Courier, monospace;">
+<?php
+                $preformatStarted = true;
+            }
+            else {
+?>
+                </pre>
+<?php
+                $preformatStarted = false;
+            }
+        } else { // alors c'est juste un texte qui commence par "`"
+            convertSimpleText($line);
+        }
+    }
 ?>
 <!DOCTYPE html>
 
@@ -268,22 +288,7 @@
                     convertTable($lines, $numLine ,$line);
                 }
                 elseif ($fc == '`') {
-                    if ($line[1] == '`' && $line[2] == '`') {
-                        if (!$preformatStarted) {
-    ?>
-                            <pre style="font-family: 'Courier New', Courier, monospace;">
-    <?php
-                            $preformatStarted = true;
-                        }
-                        else {
-    ?>
-                            </pre>
-    <?php
-                            $preformatStarted = false;
-                        }
-                    } else { // alors c'est juste un texte qui commence par "`"
-                        convertSimpleText($line);
-                    }
+                    convertPreformat($line);
                 }
                 elseif ($fc == '[') {
                     $linkPattern = '/\[([^\]]+)\]\(([^)]+)\)/'; // regex pour extraire le texte et le lien
