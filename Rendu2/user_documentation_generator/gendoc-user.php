@@ -3,7 +3,7 @@
     $lines = file("doc.md");
 
     foreach ($lines as $numLine => $line) {
-        $lines[$numLine] = trim($line); // supprime le \n de fin de ligne et tous les whitespaces
+        $lines[$numLine] = rtrim($line); // supprime le \n de fin de ligne
     }
 
     // Variables globales
