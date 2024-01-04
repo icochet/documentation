@@ -1,0 +1,79 @@
+*,
+::before,
+::after {
+    box-sizing: border-box;
+    /* padding: 0;
+    margin: 0; */
+}
+
+header {
+    text-align: center;
+    border: solid 2px;
+    border-radius: 15px;
+    margin: 2rem;
+    background-color: white;
+}
+
+h4 {
+    background-color: lightgray;
+}
+
+
+
+section {
+    padding: 2rem;
+    border: solid 2px;
+    border-radius: 15px;
+    margin: 2rem;
+    background-color: white;
+}
+
+main>h2 {
+    text-align: center;
+    border: solid 2px ;
+    border-radius: 15px;
+    margin: 2rem;
+    padding: 2rem;
+    background-color: white;
+
+}
+
+
+li {
+    list-style: none;
+}
+
+article {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+
+
+
+td{
+    padding: 5px;
+    border: 1px solid ;
+}
+
+
+table{
+    border-collapse : collapse;
+}
+
+caption{
+    text-align: start;
+}
+
+
+body{
+    background-color: #949B96;
+}
+
+.tabulation{
+    margin-left: 30px;
+}
+.tabulationplus{
+    margin-left: 60px;
+}
+
