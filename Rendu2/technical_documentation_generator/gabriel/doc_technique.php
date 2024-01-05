@@ -1,15 +1,16 @@
 <?php
 $fichiers = ['src1.c', 'src2.c', 'src3.c'];
-$lignesFichier = file('src2.c');
+
+$lignesFichier = file($fichiers[0]);
 
 $contenuFichier = implode('', $lignesFichier);
 
 // Recherche de tous les commentaires dans le fichier C
-preg_match_all('/\/\*.*?\*\/|\/\/.*?(?=\n)|#.*?(?=\n|$)/s', $contenuFichier, $correspondances);
+preg_match_all('/\/\*.*?\*\/|\/\/.*?(?=\n)|#.*?(?=\n|$)/s', $contenuFichier, $correspondances_dep);
 
-if (!empty($correspondances[0])) { // Vérifie si des commentaires ont été trouvés
+if (!empty($correspondances_dep[0])) { // Vérifie si des commentaires ont été trouvés
 
-    $commentaires = $correspondances[0]; // Stocke tous les commentaires correspondants
+    $commentaires = $correspondances_dep[0]; // Stocke tous les commentaires correspondants
 
     // Enregistre les informations du premier commentaire s'il y en a
     $commentaire = isset($commentaires[0]) ? $commentaires[0] : '';
@@ -54,45 +55,61 @@ if (!empty($correspondances[0])) { // Vérifie si des commentaires ont été tro
     $contenuFichiers = '';
     foreach ($fichiers as $nomFichier) {
     	$lignesFichier = file($nomFichier);
+      
+      $contenuFichierAct = implode('', $lignesFichier);
 
-    	// Récupère les lignes contenant #include <...> et les place dans des balises <p>
-    	$paragraphesInclusions = '';
-    	foreach ($lignesFichier as $ligne) {
-            if (strpos($ligne, '#include <') !== false) {
-            	$paragraphesInclusions .= '<p>' . htmlspecialchars($ligne) . '</p>';
-            }
-    	}
+      // Recherche de tous les commentaires dans le fichier C
+      preg_match_all('/\/\*.*?\*\/|\/\/.*?(?=\n)|#.*?(?=\n|$)/s', $contenuFichierAct, $correspondances_fich);
 
-    	// Récupère les lignes contenant #define et leurs descriptions
-    	$contenuDefines = '';
-    	foreach ($lignesFichier as $ligne) {
-            if (strpos($ligne, '#define') !== false) {
-            	// Trouve le nom et la valeur associée au #define
-            	preg_match('/#define\s+(\S+)\s+(.*)/', $ligne, $correspondances);
-            	if (isset($correspondances[1]) && isset($correspondances[2])) {
-                    $nomDefine = htmlspecialchars($correspondances[1]);
-                    $valeurDefine = htmlspecialchars($correspondances[2]);
-                    $contenuDefines .= '<p>#define ' . $nomDefine . ' ' . $valeurDefine . '</p>';
-            	}
-            }
-    	}
+      if (!empty($correspondances_fich[0])) {
+        $commentaires_fichier_actuel=$correspondances_fich[0];
+        // Récupère les lignes contenant #include <...> et les place dans des balises <p>
+    	  $paragraphesInclusions = '';
+    	  foreach ($lignesFichier as $ligne) {
+              if (strpos($ligne, '#include <') !== false) {
+              	$paragraphesInclusions .= '<p>' . htmlspecialchars($ligne) . '</p>';
+              }
+    	  }
 
-    	// Construit la structure HTML avec les données extraites
-    	$contenuFichiers .= '<section>';
+    	  // Récupère les lignes contenant #define et leurs descriptions
+    	  $contenuDefines = '';
+    	  foreach ($lignesFichier as $ligne) {
+              if (strpos($ligne, '#define') !== false) {
+              	// Trouve le nom et la valeur associée au #define
+              	preg_match('/#define\s+(\S+)\s+(.*)/', $ligne, $correspondances);
+              	if (isset($correspondances[1]) && isset($correspondances[2])) {
+                      $contenuDefines .= '<p>#define <strong> ' . $correspondances[1] . '</strong> ' . $correspondances[2] . '</p>';
+              	}
+                foreach ($commentaires_fichier_actuel as $lig){
+                  preg_match('/\\\\def\s+(\S+)/', $lig, $def);
+                  if (!empty($def && $def[1] == $correspondances[1])) {
+                    preg_match('/\\\\brief\s+(.*?)\s*\*/s', $lig, $brief);
+                    if (!empty($brief) && isset($brief[1])) {
+                      $contenuDefines .= '<p class="tabulation">' . htmlspecialchars($brief[1]) . '</p>';
+                    }
+                  }
+                }
+              
+              }
+    	  }
 
-    	// Premier article avec les #include
-    	$contenuFichiers .= '<article><h3>Référence du fichier ' . $nomFichier . '</h3>';
-    	$contenuFichiers .= $paragraphesInclusions; // Ajoute les lignes contenant #include <...>
-    	$contenuFichiers .= '</article>';
+    	  // Construit la structure HTML avec les données extraites
+    	  $contenuFichiers .= '<section>';
 
-    	// Deuxième article avec les #define si des #define sont trouvés
-    	if ($contenuDefines !== '') {
-            $contenuFichiers .= '<article><h4>Macros</h4>';
-            $contenuFichiers .= $contenuDefines;
-            $contenuFichiers .= '</article>';
-    	}
+    	  // Premier article avec les #include
+    	  $contenuFichiers .= '<article><h3>Référence du fichier ' . $nomFichier . '</h3>';
+    	  $contenuFichiers .= $paragraphesInclusions; // Ajoute les lignes contenant #include <...>
+    	  $contenuFichiers .= '</article>';
 
-    	$contenuFichiers .= '</section>';
+    	  // Deuxième article avec les #define si des #define sont trouvés
+    	  if ($contenuDefines !== '') {
+              $contenuFichiers .= '<article><h4>Macros</h4>';
+              $contenuFichiers .= $contenuDefines;
+              $contenuFichiers .= '</article>';
+    	  }
+
+    	  $contenuFichiers .= '</section>';
+      }
     }
     // Génération du contenu HTML avec les informations récupérées et la liste des fichiers
     $contenuHTML = '<!DOCTYPE html>
