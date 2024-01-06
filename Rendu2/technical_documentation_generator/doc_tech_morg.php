@@ -56,6 +56,114 @@ foreach ($fichiers as $nomFichier){
 } //Accolade qui ferme la boucle
 ?>
 </header>
+<main>
+      <section>
+        <h2>Index des fichiers</h2>
+        <h3>Liste des fichiers</h3>
+        <p>Liste de tous les fichiers avec une briève description :</p>
+        <ul>
+<?php
+foreach ($fichiers as $nomFichier){
 
+  $lignesFichier = file($nomFichier);
+  $contenu = implode('', $lignesFichier);
 
+  // Recherche du premier commentaire dans le fichier C
+  preg_match('/\/\*\*(.*?)\*\//s', $contenu, $correspondancesCommentaires);
+
+  $bref = '';
+  if (isset($correspondancesCommentaires[1])) {
+      preg_match('/\\\\brief (.*?) \*/s', $correspondancesCommentaires[1], $correspondancesBref);
+      $bref = isset($correspondancesBref[1]) ? htmlspecialchars($correspondancesBref[1]) : 'Pas de brève description trouvée';
+  } else {
+      $bref = 'Pas de commentaire trouvé';
+  }
+
+?>
+<li><strong> <?php echo $nomFichier ?></strong></li>
+<p class="tabulation"> <?php echo $bref ?> </p>
+
+<?php
+} 
+?>
+</ul></section>
+
+<h2>Documentation des fichiers</h2>
+
+<?php
+foreach ($fichiers as $nomFichier) {
+
+  $lignesFichierSTR = file_get_contents($nomFichier);
+
+  $lignesFichier = file($nomFichier);
+  
+  $contenuFichierAct = implode('', $lignesFichier);
+?>
+<section>
+        <article>
+          <h3>Référence du fichier <?php $nomFichier ?> </h3>
+
+<?php
+  // Recherche de tous les commentaires dans le fichier C
+  preg_match_all('/#include.*?$/m', $lignesFichierSTR, $contenu_include);
+  foreach($contenu_include[0] as $include){
+?>
+
+          <p><?php echo htmlentities($include) ?></p>
+
+<?php
+  }
+?>
+        </article>
+        <article>
+          <h4>Macros</h4>
+<?php
+
+// Recherche de tous les commentaires dans le fichier C
+  preg_match_all('/\/\*.*?\*\/|\/\/.*?(?=\n)|#.*?(?=\n|$)/s', $contenuFichierAct, $correspondances_fich);
+
+  if (!empty($correspondances_fich[0])) {
+    $commentaires_fichier_actuel=$correspondances_fich[0];
+    $paragraphesInclusions = '';
+    foreach ($lignesFichier as $ligne) {
+      if (strpos($ligne, '#define') !== false) {
+        // Trouve le nom et la valeur associée au #define
+        preg_match('/#define\s+(\S+)\s+(.*)/', $ligne, $correspondances);
+        if (isset($correspondances[1]) && isset($correspondances[2])) {
+          $nom = $correspondances[1];
+          $valeur = $correspondances[2];
+        }
+        foreach ($commentaires_fichier_actuel as $lig){
+          preg_match('/\\\\def\s+(\S+)/', $lig, $def);
+          if (!empty($def && $def[1] == $correspondances[1])) {
+            preg_match('/\\\\brief\s+(.*?)\s*\*/s', $lig, $brief);
+            if (!empty($brief) && isset($brief[1])) {
+              $commentaire = $brief[1];
+            }
+          }
+        }
+    
+?>
+          <p>#define <strong><?php echo htmlentities($nom)?></strong></strong> <?php echo htmlentities($valeur)?></p>
+          <p class="tabulation"><?php echo htmlentities($commentaire)?></p>
+
+<?php
+      }
+    }
+  }
+?>
+        </article>
+        <article>
+        <h4>Structures</h4>
+<?php
+
+?>
+</section>
+<?php
+} //Ferme la boucle qui décris tout les fichiers
+?>
+
+    </main> 
+  </body>
+</html>
 
