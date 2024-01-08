@@ -15,11 +15,6 @@ if (!empty($correspondances_dep[0])) { // Vérifie si des commentaires ont été
     // Enregistre les informations du premier commentaire s'il y en a
     $commentaire = isset($commentaires[0]) ? $commentaires[0] : '';
 
-    // Regex pour extraire les informations de l'en-tête du commentaire
-    preg_match_all('/\* \\\\(.*?) (.*?) \*/', $commentaire, $infosEnTete);
-
-    $enteteInfo = array_combine($infosEnTete[1], $infosEnTete[2]);
-
     // Récupération de l'auteur et de la version
     preg_match_all('/\\\\author\s+(.*)/', $commentaire, $correspondancesAuteur);
     preg_match_all('/\\\\version\s+(.*)/', $commentaire, $correspondancesVersion);
@@ -89,7 +84,6 @@ if (!empty($correspondances_dep[0])) { // Vérifie si des commentaires ont été
                     }
                   }
                 }
-              
               }
     	  }
 
@@ -141,4 +135,3 @@ if (!empty($correspondances_dep[0])) { // Vérifie si des commentaires ont été
     echo "Aucun commentaire trouvé.";
 }
 ?>
-
