@@ -49,6 +49,7 @@ if (!empty($correspondances_dep[0])) { // Vérifie si des commentaires ont été
     
     $contenuFichiers = '';
     foreach ($fichiers as $nomFichier) {
+
     	$lignesFichier = file($nomFichier);
       
       $contenuFichierAct = implode('', $lignesFichier);
