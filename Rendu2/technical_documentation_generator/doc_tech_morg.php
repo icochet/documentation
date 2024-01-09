@@ -116,7 +116,7 @@ foreach ($fichiers as $nomFichier) {
 ?>
         </article>
         <article>
-          <h4>Macros</h4>
+          
 <?php
 
 // Recherche de tous les commentaires dans le fichier C
@@ -124,9 +124,15 @@ foreach ($fichiers as $nomFichier) {
 
   if (!empty($correspondances_fich[0])) {
     $commentaires_fichier_actuel=$correspondances_fich[0];
-    $paragraphesInclusions = '';
+    $macro = false;
     foreach ($lignesFichier as $ligne) {
       if (strpos($ligne, '#define') !== false) {
+        if ($macro == false) {
+?>    
+        <h4>Macros</h4>
+<?php
+        $macro=true;
+        }
         // Trouve le nom et la valeur associée au #define
         preg_match('/#define\s+(\S+)\s+(.*)/', $ligne, $correspondances);
         if (isset($correspondances[1]) && isset($correspondances[2])) {
@@ -150,16 +156,29 @@ foreach ($fichiers as $nomFichier) {
 <?php
       }
     }
-  }
 ?>
         </article>
         <article>
-        <h4>Structures</h4>
 <?php
-
+      $type=false;
+      foreach ($lignesFichier as $ligne) {
+      if (preg_match('/\\\\typedef\s+(\w+)/', $ligne, $correspondances)) {
+        if ($type==false) {
 ?>
+        <h4>type</h4>
+<?php
+        $type=true;
+        }
+?>
+        <p>typedef int <strong><?php echo $correspondances[1] ?></strong></p>
+<?php
+      }
+    }
+?> 
 </section>
 <?php
+    
+  }
 } //Ferme la boucle qui décris tout les fichiers
 ?>
 
