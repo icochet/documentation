@@ -161,7 +161,7 @@ foreach ($fichiers as $nomFichier) {
         <article>
 <?php
       $type=false;
-      foreach ($lignesFichier as $ligne) {
+      foreach ($commentaires_fichier_actuel as $ligne) {
       if (preg_match('/\\\\typedef\s+(\w+)/', $ligne, $correspondances)) {
         if ($type==false) {
 ?>
@@ -169,8 +169,15 @@ foreach ($fichiers as $nomFichier) {
 <?php
         $type=true;
         }
+        preg_match('/\\\\brief\s+(.*?)\s*\*/s', $ligne, $brief);
+        if (isset($brief[1])) {
+          $description = $brief[1];
+        } else {
+          $description = "pas de brève description";
+        }
 ?>
         <p>typedef int <strong><?php echo $correspondances[1] ?></strong></p>
+        <p class="tabulation"><?php echo $description ?></p>
 <?php
       }
     }
