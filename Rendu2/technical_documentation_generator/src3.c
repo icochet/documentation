@@ -43,7 +43,7 @@ typedef int Age;
  *
  * \brief Type du modèle du véhicule
  *
- * Le modèle doit être une chaine de caractère de T_MODELE max caractère
+ * \brief Le modèle doit être une chaine de caractère de T_MODELE max caractère
  */
 typedef char Modele[T_MODELE];
 
@@ -75,8 +75,8 @@ struct Voiture {
 
 /**
 * 
-* \fn afficherNomAge(char* nom, Age age)
-
+* \fn void afficherNomAge(char* nom, Age age)
+*
 * \brief Affichage du nom et de l'âge d'une personne
 *
 * \param nom Le nom de la personne
@@ -89,7 +89,7 @@ void afficherNomAge(char* nom, Age age);
 
 /**
 * 
-* \fn afficherVoiture(char* marque, Modele modele)
+* \fn void afficherVoiture(char* marque, Modele modele)
 
 * \brief Affichage de la marque de la voiture et du modèle de la voiture
 *

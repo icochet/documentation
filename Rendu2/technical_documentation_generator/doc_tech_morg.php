@@ -101,7 +101,7 @@ foreach ($fichiers as $nomFichier) {
 ?>
 <section>
         <article>
-          <h3>Référence du fichier <?php $nomFichier ?> </h3>
+          <h3>Référence du fichier <?php echo $nomFichier ?> </h3>
 
 <?php
   // Recherche de tous les commentaires dans le fichier C
@@ -165,7 +165,7 @@ foreach ($fichiers as $nomFichier) {
       if (preg_match('/\\\\typedef\s+(\w+)/', $ligne, $correspondances)) {
         if ($type==false) {
 ?>
-        <h4>type</h4>
+        <h4>Définition de type</h4>
 <?php
         $type=true;
         }
@@ -182,6 +182,210 @@ foreach ($fichiers as $nomFichier) {
       }
     }
 ?> 
+        </article>
+        <article>
+<?php
+      $tableau_commentaires = [];
+
+      foreach ($lignesFichier as $numero_ligne => $ligne) {
+          // Recherche des commentaires de type // dans la ligne
+          if (preg_match('/\/\/(.*)/', $ligne, $commentaire)) {
+              $commentaire_propre = trim($commentaire[0]);
+              $tuple = [$commentaire_propre, $numero_ligne]; // Ajouter 1 à l'indice pour correspondre aux numéros de ligne conventionnels
+              array_push($tableau_commentaires, $tuple);
+          }
+      }
+      // Affichage du tableau de tuples (à titre de démonstration)
+
+      for ($j=0;$j<count($tableau_commentaires);$j++) {
+          for ($i=$tableau_commentaires[$j][1]-1; $i > 0; $i--) { 
+              if (strpos($lignesFichier[$i],'**')or strpos($lignesFichier[$i],'\struct')) {
+                  if (strpos($lignesFichier[$i],'\struct')) {
+                      preg_match('/\\\\struct\s+(\w+)/', $lignesFichier[$i], $correspondances);
+                      $tableau_commentaires[$j][1]=$correspondances[1];
+                  }
+                  break;
+              }
+          }
+      }
+      $structure=false;
+      foreach ($commentaires_fichier_actuel as $ligne) {
+        if (preg_match('/\\\\struct\s+(\w+)/', $ligne, $correspondances)) {
+          if ($structure==false) {
+?>  
+          <h4>Structures</h4>
+<?php 
+          $structure=true;
+          }
+          preg_match('/\\\\brief\s+(.*?)\s*\*/s', $ligne, $brief);
+          if (isset($brief[1])) {
+            $description = $brief[1];
+          } else {
+            $description = "pas de brève description";
+          }
+?>  
+          <p>struct <strong><?php echo $correspondances[1] ?></strong></p>
+          <p class="tabulation"><?php echo $description ?></p>
+<?php 
+            
+            foreach ($tableau_commentaires as $valeur) {
+              if ($valeur[1]==$correspondances[1]) {
+                $valeur[0] = preg_replace('/\/\/\s*/', '', $valeur[0]);
+?>
+              <p class="tabulationplus"><?php echo $valeur[0] ?></p>
+<?php
+
+              }
+            }
+          }
+        }
+
+?> 
+        </article>
+        <article>
+        <h4>Fonctions</h4>
+<?php
+        foreach($commentaires_fichier_actuel as $commentaire){
+          preg_match('/\\\\fn\s+(\w+\s+\w+)\s*\(/', $commentaire, $fonctions);
+          if (!empty($fonctions)) {
+            preg_match('/\\\\brief\s+(.*?)\s*\*/s', $commentaire, $brief);
+            if (!empty($brief)) {
+?>
+              <p><strong><?php echo htmlspecialchars($fonctions[1]) ?></strong></p>
+              <p class="tabulation"><?php echo $brief[1] ?></p>
+<?php
+            }
+          }
+        }
+?> 
+        </article>
+        <hr>
+        <article>
+<?php
+$macro = false;
+foreach ($lignesFichier as $ligne) {
+  if (strpos($ligne, '#define') !== false) {
+    if ($macro == false) {
+?>    
+    <h4>Documentation des macros</h4>
+<?php
+    $macro=true;
+    }
+    // Trouve le nom et la valeur associée au #define
+    preg_match('/#define\s+(\S+)\s+(.*)/', $ligne, $correspondances);
+    if (isset($correspondances[1]) && isset($correspondances[2])) {
+      $nom = $correspondances[1];
+      $valeur = $correspondances[2];
+    }
+    foreach ($commentaires_fichier_actuel as $lig){
+      preg_match('/\\\\def\s+(\S+)/', $lig, $def);
+      if (!empty($def && $def[1] == $correspondances[1])) {
+        preg_match('/\\\\brief\s+(.*?)\s*\*/s', $lig, $brief);
+        if (!empty($brief) && isset($brief[1])) {
+          $commentaire = $brief[1];
+        }
+      }
+    }
+
+?>
+      <p><strong>#define <?php echo htmlentities($nom)?> <?php echo htmlentities($valeur)?></strong></p>
+      <p class="tabulation"><?php echo htmlentities($commentaire)?></p>
+
+<?php
+  }
+}
+?> 
+        </article>
+        <hr>
+        <article>
+<?php
+            $type=false;
+            foreach ($commentaires_fichier_actuel as $commentaire) {
+                preg_match('/\\\\typedef\s+(\w+)/', $commentaire, $typedef);
+                if (!empty($typedef)) {
+                  if ($type == false) {
+                    ?>    
+                        <h4>Documentation des définitions de type</h4>
+                    <?php
+                        $type=true;
+                        }
+                    preg_match('/\\\\brief\s+(.*?)\s*(?:\\\\brief\s+(.*?))?\s*\*\//s', $commentaire, $brief);
+                    if (!empty($brief)) {
+                        $briefText = preg_replace('/^\s*\*+\s*|\s*\*+\s*$/', '', $brief[1]);
+                        $briefText = preg_replace('/^\s*\*+\s*|\s*\*+\s*$/', '', $briefText);
+?>
+            <p><strong><?php echo htmlspecialchars($typedef[1]) ?></strong></p>
+            <p class="tabulation"><?php echo htmlspecialchars($briefText) ?></p>
+<?php
+                    if (isset($brief[2])) {
+                      $briefText2 = preg_replace('/^\s*\*+\s*|\s*\*+\s*$/', '', $brief[2]);
+?>
+                      <p class="tabulation"><?php echo htmlspecialchars($briefText2) ?></p>
+<?php
+            }
+        }
+    }
+}
+
+?> 
+        </article>
+        <hr>
+        <article>
+          <h4>Documentation des fonctions</h4>
+<?php
+        foreach($commentaires_fichier_actuel as $commentaire){
+          preg_match('/\\\\fn\s+(\w+\s+\w+)\s*\(/', $commentaire, $fonctions);
+          if (!empty($fonctions)) {
+            preg_match('/\\\\brief\s+(.*?)\s*\*/s', $commentaire, $brief);
+            if (!empty($brief)) {
+              
+?>
+                <p><strong><?php echo htmlspecialchars($fonctions[1]) ?></strong></p>
+                <p class="tabulation"><?php echo $brief[1] ?></p>
+<?php
+              preg_match_all('/\\\\param\s+(\w+)\s+((?:(?!\\\\param).)*)/s', $commentaire, $matches, PREG_SET_ORDER);
+              foreach ($matches as $match) {
+                  $paramName = $match[1]; // Nom du paramètre
+                  $paramDesc = trim(str_replace(array('*', '/'), '', $match[2])); // Description du paramètre (suppression des * et /)
+                  $params[] = array($paramName, $paramDesc); // Ajout du tuple au tableau
+              }
+              if (!empty($params)) {
+                ?>
+                <table>
+                    <caption>
+                        Paramètre(s)
+                    </caption>
+                    <?php
+                    foreach ($params as $param) {
+                        ?>
+                        <tr>
+                            <td><?php echo $param[0] ?> </td>
+                            <td><?php echo $param[1] ?> </td>
+                        </tr>
+                        <?php
+                    }
+                    $params = array();
+                    ?>
+                </table>
+                <?php
+              }
+            }
+          }
+          preg_match('/\\\\return\s+(.*)/', $commentaire, $return);
+            if (!empty($return)) {
+
+?>
+              <p class="tabulation"><strong>Renvoie</strong></p>
+              <p class="tabulationplus"><?php echo $return[1] ?></p>
+<?php
+
+            }
+        }
+
+
+?>
+
+
 </section>
 <?php
     

@@ -45,7 +45,7 @@
 *
 * \brief type tableau de taille TAILLE_MAX
 *
-* Le type TableauPreference sert de tableau pour stocker les préférences
+* \brief Le type TableauPreference sert de tableau pour stocker les préférences
 * 
 */
 typedef int TableauPreference[TAILLE_MAX];
@@ -56,7 +56,7 @@ typedef int TableauPreference[TAILLE_MAX];
 *
 * \brief type tableau de taille TAILLE_MAX
 *
-* Le type TableauNotes sert de tableau pour stocker les notes
+* \brief Le type TableauNotes sert de tableau pour stocker les notes
 * 
 */
 typedef float TableauNotes[TAILLE_MAX];
@@ -88,11 +88,11 @@ typedef struct {
 } Cours;        // Structure d'un cours
 
 
-// Prototypes des fonctions et des procédures //
-float calculerMoyenne(struct Cours cours);
-void afficherDetailsEtudiant(struct Etudiant etudiant);
-void afficherDetailsCours(struct Cours cours)
-bool afficherMessageFelicitation(float moyenne, float seuil)
+/* Prototypes des fonctions et des procédures */
+float calculerMoyenne(Cours cours);
+void afficherDetailsEtudiant(Etudiant etudiant);
+void afficherDetailsCours(Cours cours);
+bool afficherMessageFelicitation(float moyenne, float seuil);
 
 /******************************************************
  *                PROGRAMME PRINCIPAL                 *
@@ -152,19 +152,19 @@ int main() {
  ******************************************************/
 
 /**
-* 
-* \fn float calculerMoyenne(struct Cours cours)
-*
-* \brief Fonction pour calculer la moyenne des notes d'un cours
-*
-* \param cours Le cours
-*
-* \return la moyenne 
-*
-* Cette fonction calcul la moyenne en parcourant chaque note
-*
-*/
-float calculerMoyenne(struct Cours cours) {
+ * 
+ * \fn float calculerMoyenne(struct Cours cours)
+ *
+ * \brief Fonction pour calculer la moyenne des notes d'un cours
+ *
+ * \return la moyenne 
+ *
+ * Cette fonction calcul la moyenne en parcourant chaque note
+ *
+ * \param cours Le cours
+ *
+ */
+float calculerMoyenne(Cours cours) {
     float somme = 0.0;
     for (int i = 0; i < TAILLE_MAX; i++) {
         somme += cours.notes[i];
@@ -173,17 +173,17 @@ float calculerMoyenne(struct Cours cours) {
 }
 
 /**
-* 
-* \fn void afficherDetailsEtudiant(struct Etudiant etudiant)
-*
-* \brief Procédure pour afficher les détails d'un étudiant
-*
-* \param etudiant L'étudiant à afficher
-*
-* Cette procédure permet d'afficher le nom, l'âge et les préférences d'un étudiant
-*
-*/
-void afficherDetailsEtudiant(struct Etudiant etudiant) {
+ * 
+ * \fn void afficherDetailsEtudiant(struct Etudiant etudiant)
+ *
+ * \brief Procédure pour afficher les détails d'un étudiant
+ *
+ * Cette procédure permet d'afficher le nom, l'âge et les préférences d'un étudiant
+ *
+ * \param etudiant L'étudiant à afficher
+ *
+ */
+void afficherDetailsEtudiant(Etudiant etudiant) {
     printf("Nom: %s\n", etudiant.nom);
     printf("Age: %d\n", etudiant.age);
     printf("Preferences: ");
@@ -194,17 +194,17 @@ void afficherDetailsEtudiant(struct Etudiant etudiant) {
 }
 
 /**
-* 
-* \fn afficherDetailsCours(struct Cours cours)
-*
-* \brief Procédure pour afficher les détails d'un cours
-*
-* \param cours Le cours
-*
-* Cette procédure permet d'afficher le nom du cours et les notes
-*
-*/
-void afficherDetailsCours(struct Cours cours) {
+ * 
+ * \fn void afficherDetailsCours(struct Cours cours)
+ *
+ * \brief Procédure pour afficher les détails d'un cours
+ *
+ * Cette procédure permet d'afficher le nom du cours et les notes
+ *
+ * \param cours La matiere
+ *
+ */
+void afficherDetailsCours(Cours cours) {
     printf("Nom du cours: %s\n", cours.nom);
     printf("Notes: ");
     for (int i = 0; i < TAILLE_MAX; i++) {
@@ -214,20 +214,20 @@ void afficherDetailsCours(struct Cours cours) {
 }
 
 /**
-* 
-* \fn bool afficherMessageFelicitation(float moyenne, float seuil)
-*
-* \brief Fonction pour afficher un message de félicitations et retourner un indicateur
-*
-* \param moyenne La moyenne de l'étudiant
-*
-* \param seuil Le seuil
-*
-* \return true si la moyenne est supérieur au seuil, false sinon
-*
-* Cette fonction affiche un message de félicitation
-*
-*/
+ * 
+ * \fn bool afficherMessageFelicitation(float moyenne, float seuil)
+ *
+ * \brief Fonction pour afficher un message de félicitations et retourner un indicateur
+ *
+ * \return true si la moyenne est supérieur au seuil, false sinon
+ *
+ * Cette fonction affiche un message de félicitation
+ *
+ * \param moyenne La moyenne de l'étudiant
+ *
+ * \param seuil Le seuil
+ *
+ */
 bool afficherMessageFelicitation(float moyenne, float seuil) {
     if (moyenne > seuil) {
         printf("Félicitations ! La moyenne est excellente.\n");

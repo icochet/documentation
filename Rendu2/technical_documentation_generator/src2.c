@@ -33,9 +33,9 @@
  * tels que l'identifiant, le nom et le prix.
  */
 struct Produit{
-    int id; /** Identifiant du produit */
-    char nom[MAX_LONGUEUR]; /** Nom du produit */
-    float prix; /** Prix du produit */
+    int id; // Identifiant du produit 
+    char nom[MAX_LONGUEUR]; // Nom du produit 
+    float prix; // Prix du produit
 };
 
 /**
@@ -47,9 +47,9 @@ struct Produit{
  * tels que le code de la facture, sa description et son montant.
  */
 struct Facture{
-    int code; /** Code de la facture */
-    char description[MAX_LONGUEUR]; /** Description de la facture */
-    double montant; /** Montant de la facture */
+    int code; // Code de la facture
+    char description[MAX_LONGUEUR]; // Description de la facture 
+    double montant; // Montant de la facture
 };
 
 /**
@@ -58,7 +58,7 @@ struct Facture{
  *
  * \brief type tableau de TAILLE_TABLEAU de Produit
  *
- * Le type TableauProduits sert de stockage pour les Produits
+ * \brief Le type TableauProduits sert de stockage pour les Produits
  *
 */
 typedef Produit TableauProduits[TAILLE_TABLEAU];
@@ -69,13 +69,13 @@ typedef Produit TableauProduits[TAILLE_TABLEAU];
  *
  * \brief type tableau de TAILLE_TABLEAU de Facture
  *
- * Le type TableauFactures sert de stockage pour les Factures
+ * \brief Le type TableauFactures sert de stockage pour les Factures
  *
 */
 typedef Facture TableauFactures[TAILLE_TABLEAU];
 
 /**
- * \fn afficherProduit(Produit p)
+ * \fn void afficherProduit(Produit p)
  * 
  * \brief Affiche les détails d'un produit
  * 
@@ -89,7 +89,7 @@ void afficherProduit(Produit p) {
 
 /**
  * 
- * \fn afficherFacture(Facture f)
+ * \fn void afficherFacture(Facture f)
  * 
  * \brief Affiche les détails d'une facture
  * 
