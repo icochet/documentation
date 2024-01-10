@@ -4,15 +4,17 @@
       <head>
         <meta charset="UTF-8" />
         <meta name="Documentation" content="Documentation d\'un code source" />
-        <title>Documentation</title>
+        <title>Documentation technique : <?php echo $argv[1]?></title>
         <link rel="stylesheet" href="style.css" />
       </head>
       <body>
         <header>
-          <h1>Documentation</h1>
+          <h1>Documentation technique : <?php echo $argv[1]?></h1>
+          <h2>...<?php echo $argv[2]?></h2>
+          <h2>Version : <?php echo $argv[3]?></h2>
   
 <?php
-$fichiers = ['src1.c', 'src2.c', 'src3.c'];
+$fichiers = glob("*.c");  //['src1.c', 'src2.c', 'src3.c'];
 
 foreach ($fichiers as $nomFichier){
 
@@ -22,6 +24,10 @@ foreach ($fichiers as $nomFichier){
 
     // Recherche de tous les commentaires dans le fichier C
     preg_match_all('/\/\*.*?\*\/|\/\/.*?(?=\n)|#.*?(?=\n|$)/s', $contenuFichier, $correspondances_dep);
+
+    $auteur = "Aucun trouvé";
+    $version = "Aucune trouvé";
+    $date = "Aucune trouvé";
 
     if (!empty($correspondances_dep[0])) { // Vérifie si des commentaires ont été trouvés
 
@@ -45,8 +51,9 @@ foreach ($fichiers as $nomFichier){
         // Récupération de la date complète après \date
         preg_match_all('/\\\\date\s+(.*)/', $commentaire, $correspondancesDate);
         $date = isset($correspondancesDate[1][0]) ? $correspondancesDate[1][0] : '';
-    }  
+    } 
 ?>
+<p>Fichier: <?php echo $nomFichier ?></p>
 <p>Auteur: <?php echo $auteur ?></p>
 <p>Version: <?php echo $version ?></p>
 <p>Date: <?php echo $date ?></p>
@@ -389,6 +396,12 @@ foreach ($lignesFichier as $ligne) {
 </section>
 <?php
     
+  }
+  else{
+    ?>
+    <p>Pas de commentaire trouvé</p>
+
+<?php
   }
 } //Ferme la boucle qui décris tout les fichiers
 ?>
