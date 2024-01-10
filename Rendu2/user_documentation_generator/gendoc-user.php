@@ -15,7 +15,6 @@
     $detailLineNb;
     $skip;
 
-
     // Fonctions
 
     function specialFormats($line) {
@@ -49,7 +48,7 @@
 <?php
                     for ($i = 0; $i < count($tableContent); $i++) {
 ?>
-                <td><?php echo $tableContent[$i] ?></td>
+                <td><?= $tableContent[$i] ?></td>
 <?php
                     }
                     for ($j = 0; $j < ($detailLineNb - count($tableContent)); $j++) {
@@ -69,7 +68,7 @@
         }
         else {
 ?>
-            <p><?php echo $line ?>
+            <p><?= $line ?>
 <?php
             $paragraphStarted = true;
         }
@@ -87,27 +86,27 @@
             switch ($hashLen) {
                 case 1:
 ?>
-<h1 style="text-align: center;"><?php echo $lineWithoutHash ?></h1>
+<h1 style="text-align: center;"><?= $lineWithoutHash ?></h1>
 <?php
                     break;
                 case 2:
 ?>
-    <h2><?php echo $lineWithoutHash ?></h2>
+    <h2><?= $lineWithoutHash ?></h2>
 <?php
                     break;
                 case 3:
 ?>
-    <h3><?php echo $lineWithoutHash ?></h3>
+    <h3><?= $lineWithoutHash ?></h3>
 <?php
                     break;
                 case 4:
 ?>
-<h4><?php echo $lineWithoutHash ?></h4>
+<h4><?= $lineWithoutHash ?></h4>
 <?php
                     break;
                 default:
 ?>
-    <p><?php echo $line ?></p>
+    <p><?= $line ?></p>
 <?php
             }
         }
@@ -126,14 +125,14 @@
             if (!$listStarted) {
 ?>
     <ul>
-        <li><?php echo $lineWithoutDash ?>
+        <li><?= $lineWithoutDash ?>
 <?php
                 $listStarted = true;
             }
             else {
 ?>
 </li>
-        <li><?php echo $lineWithoutDash ?>
+        <li><?= $lineWithoutDash ?>
 <?php
             }
         }
@@ -170,7 +169,7 @@
 <?php
                 for ($i = 0; $i < $detailLineNb; $i++) {
 ?>
-                <th><?php echo $tableTitles[$i] ?></th>
+                <th><?= $tableTitles[$i] ?></th>
 <?php
                 }
 ?>
@@ -202,7 +201,7 @@
 <?php
                     for ($i = 0; $i < count($tableContent); $i++) {
 ?>
-                <td><?php echo $tableContent[$i] ?></td>
+                <td><?= $tableContent[$i] ?></td>
 <?php
                     }
                     for ($j = 0; $j < ($detailLineNb - count($tableContent)); $j++) {
@@ -246,7 +245,7 @@
             $text = $matches[1];
             $link = $matches[2];
 ?>
-            <a href="<?php echo $link ?>"><?php echo $text ?></a>
+            <a href="<?= $link ?>"><?= $text ?></a>
 <?php
         } else { // c'est juste un texte qui commence par "["
             convertSimpleText($line);
